@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 150px auto;
+    padding: 50px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-box {
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.input-group input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    height: 40px;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+.login-box p {
+    margin-top: 100px;
+    color: #666;
+}
+
+.login-box p a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.login-box p a:hover {
+    color: #3e8e41;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    .container {
+        margin: 20px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 10px auto;
+        padding: 10px;
+    }
+    .login-box h2 {
+        margin-bottom: 10px;
+    }
+    .input-group {
+        margin-bottom: 10px;
+    }
+    button[type="submit"] {
+        height: 30px;
+        padding: 5px;
+    }
+}
