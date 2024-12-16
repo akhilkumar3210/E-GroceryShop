@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    
+</head>
+
+<body style="background-image: url(static/img/grogo.jpeg);">
+    <div class="main">
+        <h1>Register</h1>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <label for="first">
+                Username:
+            </label>
+            <input type="text" id="" name="uname" 
+                placeholder="Enter your Username" required>
+                <label for="email">
+                    Email:
+                </label>
+            <input type="email" name="email" id="" placeholder="Enter Email">
+                <label for="password">
+                    Password:
+                </label>
+            <input type="password" id="" name="password" 
+                placeholder="Enter your Password" required>
+
+            <div class="wrap">
+                <button type="submit">
+                    Register
+                </button>
+            </div>
+
+        </form>
+        
+    </div>
+    <div>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            {{ message }}
+          </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/addpro.css' %}">
+</head>
+
+<body style="background-image: url(static/img/grogo.jpeg);">
+
+    <div class="container">
+        <h1>Add Product</h1>
+        <form action="#" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="productName">Product ID:</label>
+                <input type="text" id="" name="p_id" required>
+            </div>
+            <div class="form-group">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="productDescription">Product Description:</label>
+                <input type="text" id="" name="description" required>
+            </div>
+            <div class="form-group">
+                <label for="productCategory">Product Category:</label>
+                <select id="" name="p_categories">
+                {% for i in data %}
+                    <option value="{{i.category}}">{{i.category}}</option>
+                {% endfor %}
+                </select>
+               
+            </div>
+           
+            <div class="form-group">
+                <label for="productImage">Product Image:</label>
+                <input type="file" id="" name="p_img" accept="image/*" required>
+            </div>
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+</body>
+
+</html>
