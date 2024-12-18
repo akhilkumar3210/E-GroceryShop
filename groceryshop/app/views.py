@@ -42,7 +42,8 @@ def gro_logout(req):
 def shop_home(req):
     if 'shop' in req.session:
         product=Product.objects.all()
-        return render(req,'shop/shop.html',{'products':product})
+        det=Details.objects.all()
+        return render(req,'shop/shop.html',{'products':product,'detail':det})
     else:
         return redirect(gro_login)
 
@@ -52,8 +53,9 @@ def add_product(req):
             pid=req.POST['p_id']
             name=req.POST['name']
             descri=req.POST['description']
-            category=req.POST['product.category']
-            data=Product.objects.create(pid=pid,name=name,descri=descri,category=category)
+            categories=req.POST['p_categories']
+            img=req.FILES['p_img']
+            data=Product.objects.create(pid=pid,name=name,img=img,descri=descri,category=Category.objects.get(category=categories))
             data.save()
             return redirect(details)
         else:
@@ -76,15 +78,17 @@ def category(req):
 
 def details(req):
     if req.method == 'POST':
+            products=req.POST['p_id']
             weight=req.POST['p_weight']
             price=req.POST['p_price']
             offprice=req.POST['of_price']
             stock=req.POST['p_stock']
-            data=Details.objects.create(weight=weight,price=price,offprice=offprice,stock=stock)
+            data=Details.objects.create(weight=weight,price=price,off_price=offprice,stock=stock,product=Product.objects.get(pid=products))
             data.save()
             return redirect(shop_home)
     else:
-            return render(req,'shop/details.html')
+            data=Product.objects.all()
+            return render(req,'shop/details.html',{'data':data})
 
 
 
@@ -102,7 +106,6 @@ def register(req):
         try:
             data=User.objects.create_user(first_name=uname,email=email,username=email,password=password)
             data.save()
-            send_mail('Registration In EcommShop', 'Successfully Registered In EcommShop', settings.EMAIL_HOST_USER, [email])
             return redirect(gro_login)
         except:
             messages.warning(req,'Email Already Exists!!')

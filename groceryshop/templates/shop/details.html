@@ -9,13 +9,21 @@
     <title>Document</title>
 </head>
 
-<body>
+<body style="background-image: url(static/img/grogo.jpeg);">
     <div class="container">
         <form action="" method="post">
             {% csrf_token %}
             <div class="form-group">
+                <label for="product Id">Product Id:</label>
+                <select id="" name="p_id">
+                {% for i in data %}
+                    <option value="{{i.pid}}">{{i.pid}}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="Product Weight">Product Weight:</label>
-                <input type="number" id="" name="p_wieght" required>
+                <input type="number" id="" name="p_weight" required>
             </div>
             <div class="form-group">
                 <label for="productPrice">Product Price:</label>
