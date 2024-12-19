@@ -8,6 +8,8 @@ urlpatterns=[
     path('addproduct',views.add_product),
     path('category',views.category),
     path('details',views.details),
+    path('edit/<id>',views.edit_product),
+
 
 # -----------------------------------------------------------user-----------------------------------------------------------------
     path('register',views.register),

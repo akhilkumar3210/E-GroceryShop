@@ -41,9 +41,8 @@ def gro_logout(req):
 
 def shop_home(req):
     if 'shop' in req.session:
-        product=Product.objects.all()
-        det=Details.objects.all()
-        return render(req,'shop/shop.html',{'products':product,'detail':det})
+        data=Details.objects.all()
+        return render(req,'shop/shop.html',{'data':data})
     else:
         return redirect(gro_login)
 
@@ -72,7 +71,8 @@ def category(req):
             data.save()
             return redirect(shop_home)
         else:
-            return render(req,'shop/category.html')
+            data=Category.objects.all()
+            return render(req,'shop/category.html',{'data':data})
     else:
          return redirect(gro_login)
 
@@ -89,6 +89,24 @@ def details(req):
     else:
             data=Product.objects.all()
             return render(req,'shop/details.html',{'data':data})
+    
+def edit_product(req,id):
+    if req.method=='POST':
+        weight=req.POST['p_weight']
+        price=req.POST['p_price']
+        offprice=req.POST['of_price']
+        stock=req.POST['p_stock']
+        if weight:
+            Details.objects.filter(pk=id).create(weight=weight,price=price,off_price=offprice,stock=stock)
+            data=Details.objects.get(pk=id)
+            data.weight=weight
+            data.save()
+        else:
+            Details.objects.filter(pk=id).update(weight=weight,price=price,off_price=offprice,stock=stock)
+        return redirect(shop_home)
+    else:
+        data=Details.objects.get(pk=id)
+        return render(req,'shop/edit.html',{'data':data})
 
 
 

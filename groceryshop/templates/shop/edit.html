@@ -5,38 +5,30 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/edit.css' %}">
     <title>Document</title>
 </head>
 
 <body style="background-image: url(static/img/grogo.jpeg);">
     <div class="container">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-                <label for="product Id">Product Id:</label>
-                <select id="" name="p_id">
-                {% for i in data %}
-                    <option value="{{i.pid}}">{{i.pid}}</option>
-                {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="Product Weight">Product Weight:</label>
-                <input type="number" id="" name="p_weight" required>
+                <input type="number" id="" name="p_weight" required value="{{data.weight}}">
             </div>
             <div class="form-group">
                 <label for="productPrice">Product Price:</label>
-                <input type="number" id="" name="p_price" required>
+                <input type="number" id="" name="p_price" required value="{{data.price}}">
             </div>
             <div class="form-group">
                 <label for="productPrice">Product Offer Price:</label>
-                <input type="number" id="" name="of_price" required>
+                <input type="number" id="" name="of_price" required value="{{data.off_price}}">
             </div>
             <div class="form-group">
                 <label for="productStock">Product Stock:</label>
-                <input type="number" id="" name="p_stock" required><br>
-                <button type="submit">Submit</button>
+                <input type="number" id="" name="p_stock" required value="{{data.stock}}"><br><br>
+                <button type="submit" value="Update">Update</button>
         </form>
     </div>
 </body>
