@@ -9,6 +9,7 @@ urlpatterns=[
     path('category',views.category),
     path('details',views.details),
     path('edit/<id>',views.edit_product),
+    path('delete/<pid>',views.delete_product),
 
 
 # -----------------------------------------------------------user-----------------------------------------------------------------

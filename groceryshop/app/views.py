@@ -92,21 +92,32 @@ def details(req):
     
 def edit_product(req,id):
     if req.method=='POST':
-        weight=req.POST['p_weight']
-        price=req.POST['p_price']
-        offprice=req.POST['of_price']
-        stock=req.POST['p_stock']
-        if weight:
-            Details.objects.filter(pk=id).create(weight=weight,price=price,off_price=offprice,stock=stock)
-            data=Details.objects.get(pk=id)
-            data.weight=weight
+        pid=req.POST['p_id']
+        name=req.POST['name']
+        descri=req.POST['description']
+        img=req.FILES.get('p_img')
+        if img:
+            Product.objects.filter(pk=id).update(pid=pid,name=name,descri=descri)
+            data=Product.objects.get(pk=id)
+            data.img=img
+            file=data.img.url
+            file=file.split('/')[-1]
+            os.remove('media/'+file)
             data.save()
         else:
-            Details.objects.filter(pk=id).update(weight=weight,price=price,off_price=offprice,stock=stock)
+            Product.objects.filter(pk=id).update(pid=pid,name=name,descri=descri)
         return redirect(shop_home)
     else:
-        data=Details.objects.get(pk=id)
+        data=Product.objects.get(pk=id)
         return render(req,'shop/edit.html',{'data':data})
+    
+def delete_product(req,pid):
+    data=Product.objects.get(pk=pid)
+    file=data.img.url
+    file=file.split('/')[-1]
+    os.remove('media/'+file)
+    data.delete()
+    return redirect(shop_home)
 
 
 

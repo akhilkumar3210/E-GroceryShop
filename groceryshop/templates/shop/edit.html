@@ -14,21 +14,29 @@
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-                <label for="Product Weight">Product Weight:</label>
-                <input type="number" id="" name="p_weight" required value="{{data.weight}}">
+                <label for="productName">Product ID:</label>
+                <input type="text" id="" name="p_id" required value="{{data.pid}}">
             </div>
             <div class="form-group">
-                <label for="productPrice">Product Price:</label>
-                <input type="number" id="" name="p_price" required value="{{data.price}}">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="" name="name" required value="{{data.name}}">
             </div>
             <div class="form-group">
-                <label for="productPrice">Product Offer Price:</label>
-                <input type="number" id="" name="of_price" required value="{{data.off_price}}">
+                <label for="productDescription">Product Description:</label>
+                <input type="text" id="" name="description" required value="{{data.descri}}">
             </div>
             <div class="form-group">
-                <label for="productStock">Product Stock:</label>
-                <input type="number" id="" name="p_stock" required value="{{data.stock}}"><br><br>
-                <button type="submit" value="Update">Update</button>
+                <label for="productCategory">Product Category:</label>
+                <select id="" name="p_categories">
+                    <option value="{{data.category.category}}">{{data.category.category}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="productImage">Product Image:</label>
+                <img src="{{data.img.url}}" alt="" style="width: 400px;height:400px;">
+                <input type="file" id="" name="p_img" accept="image/*" >
+            </div>
+            <button type="submit" value="Update">Update</button>
         </form>
     </div>
 </body>
