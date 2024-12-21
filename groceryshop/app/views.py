@@ -42,7 +42,8 @@ def gro_logout(req):
 def shop_home(req):
     if 'shop' in req.session:
         data=Details.objects.all()
-        return render(req,'shop/shop.html',{'data':data})
+        data1=Details.objects.all()
+        return render(req,'shop/shop.html',{'data':data,'data1':data})
     else:
         return redirect(gro_login)
 
@@ -100,9 +101,6 @@ def edit_product(req,id):
             Product.objects.filter(pk=id).update(pid=pid,name=name,descri=descri)
             data=Product.objects.get(pk=id)
             data.img=img
-            file=data.img.url
-            file=file.split('/')[-1]
-            os.remove('media/'+file)
             data.save()
         else:
             Product.objects.filter(pk=id).update(pid=pid,name=name,descri=descri)
@@ -144,19 +142,7 @@ def register(req):
         
 def user_home(req):
     if 'user' in req.session:
-        product=Product.objects.all()
+        product=Details.objects.all()
         return render(req,'user/user.html',{'products':product})
     
      
-
-
-
-
-
-
-
-
-
-
-
-

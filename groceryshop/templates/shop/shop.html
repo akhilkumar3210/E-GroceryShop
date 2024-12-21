@@ -23,6 +23,7 @@
             <li><a href="#">Home</a></li>
             <li><a href="addproduct">Add Product</a></li>
             <li><a href="category">Add Categories</a></li>
+            <li><a href="details">Add Details</a></li>
             <li><a href="logout">Logout</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
@@ -40,11 +41,13 @@
                         <h4 class="card-title">{{i.product.name}}</h4>
                         <p class="card-text">{{i.product.descri}}</p>
                         <p>{{i.product.category.category}}</p>
-                        <h5>{{i.weight}}ml</h5>
-                        <h5 style="text-decoration: line-through;">₹{{i.price}}</h5>
-                        <h4>₹{{i.off_price}}</h4>
-                        <a href="edit/{{i.pk}}" class="btn btn-primary">Edit</a>
-                        <a href="delete/{{i.pk}}" class="btn btn-primary">Delete</a>
+                {% for j in data %}   
+                        <h5>{{j.weight}}ml</h5>
+                        <h5 style="text-decoration: line-through;">₹{{j.price}}</h5>
+                        <h4>₹{{j.off_price}}</h4>
+                {%  endfor %}
+                        <a href="edit/{{i.product.pk}}" class="btn btn-primary">Edit</a>
+                        <a href="delete/{{i.product.pk}}" class="btn btn-primary">Delete</a>
                     </div>
                 </div>
             </div>
