@@ -109,6 +109,25 @@ def edit_product(req,id):
         data=Product.objects.get(pk=id)
         return render(req,'shop/edit.html',{'data':data})
     
+def editdetails(req,product_id):
+    if req.method == 'POST':
+        product=req.POST['p_id']
+        weight=req.POST['p_weight']
+        price=req.POST['p_price']
+        offprice=req.POST['of_price']
+        stock=req.POST['p_stock']
+        if product:
+            Details.objects.filter(pk=product_id).update(product_id=product,weight=weight,price=price,off_price=offprice,stock=stock)
+            data=Details.objects.get(pk=product_id)
+            data.product=product
+            data.save()
+        else:
+                Details.objects.filter(pk=product_id).update(weight=weight,price=price,off_price=offprice,stock=stock)
+        return redirect(shop_home)
+    else:
+         data=Product.objects.get(pk=product_id)
+    return render(req,'shop/editdetails.html',{'data':data}) 
+    
 def delete_product(req,pid):
     data=Product.objects.get(pk=pid)
     file=data.img.url

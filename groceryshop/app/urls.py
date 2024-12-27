@@ -10,6 +10,8 @@ urlpatterns=[
     path('details',views.details),
     path('edit/<id>',views.edit_product),
     path('delete/<pid>',views.delete_product),
+    path('editdetails/<product_id>',views.editdetails),
+
 
 
 # -----------------------------------------------------------user-----------------------------------------------------------------
