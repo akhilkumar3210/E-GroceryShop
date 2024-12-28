@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -9,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <title></title>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="logo"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></div>
@@ -21,12 +23,23 @@
             <li><a href="#">Home</a></li>
             <li><label for="Categories">Categories</label>
                 <select id="" name="Categories">
-                  <a href=""><option value="">Beverages</option></a>
-                  <a href=""><option value="saab">Bakery</option></a>
-                  <a href=""><option value="fiat">Frozen</option></a>
-                  <a href=""><option value="audi">Snacks</option></a>
-                  <a href=""><option value="audi">personal care</option></a>
-                </select></li>
+                    <a href="">
+                        <option value="">Beverages</option>
+                    </a>
+                    <a href="">
+                        <option value="saab">Bakery</option>
+                    </a>
+                    <a href="">
+                        <option value="fiat">Frozen</option>
+                    </a>
+                    <a href="">
+                        <option value="audi">Snacks</option>
+                    </a>
+                    <a href="">
+                        <option value="audi">personal care</option>
+                    </a>
+                </select>
+            </li>
             <li><a href="logout">Logout</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
@@ -35,26 +48,28 @@
     <div class="container mt-4">
         <div class="row">
 
-        {% for i in products %}
-            <div class="col-lg-4">
-                <div class="card" style="width:400px">
-                    <img class="card-img-top" src="{{i.product.img.url}}" alt="Card image" style="width:100%"
-                        height="350px">
-                    <div class="card-body">
-                        <h4 class="card-title">{{i.product.name}}</h4>
-                        <p class="card-text">{{i.product.descri}}</p>
-                        <p>{{i.product.category.category}}</p>
-                        <h5>{{i.weight}}ml</h5>
-                        <h5 style="text-decoration: line-through;">₹{{i.price}}</h5>
-                        <h4>₹{{i.off_price}}</h4>
-                        <a href="edit/{{i.pk}}" class="btn btn-primary">Edit</a>
-                        <a href="delete/{{i.pk}}" class="btn btn-primary">Delete</a>
+            {% for i in products %}
+            <a href="viewpro/{{i.pk}}">
+                <div class="col-lg-4">
+                    <div class="card" style="width:400px">
+                        <img class="card-img-top" src="{{i.img.url}}" alt="Card image" style="width:100%"
+                            height="350px">
+                        <div class="card-body">
+                            <h4 class="card-title">{{i.name}}</h4>
+                            <p class="card-text">{{i.descri}}</p>
+                            <p>{{i.category.category}}</p>
+                            {% for j in data %}
+                            <h5>{{j.weight}}ml</h5>
+                            <h5 style="text-decoration: line-through;">₹{{j.price}}</h5>
+                            <h4>₹{{j.off_price}}</h4>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-        {% endfor %}
+            </a>
+            {% endfor %}
         </div>
     </div>
 </body>
+
 </html>

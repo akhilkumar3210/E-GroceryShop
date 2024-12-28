@@ -41,9 +41,9 @@ def gro_logout(req):
 
 def shop_home(req):
     if 'shop' in req.session:
-        data=Details.objects.all()
+        data=Product.objects.all()
         data1=Details.objects.all()
-        return render(req,'shop/shop.html',{'data':data,'data1':data})
+        return render(req,'shop/shop.html',{'data':data,'data1':data1})
     else:
         return redirect(gro_login)
 
@@ -109,25 +109,25 @@ def edit_product(req,id):
         data=Product.objects.get(pk=id)
         return render(req,'shop/edit.html',{'data':data})
     
-def editdetails(req,product_id):
+def editdetails(req,pid):
     if req.method == 'POST':
         product=req.POST['p_id']
         weight=req.POST['p_weight']
         price=req.POST['p_price']
         offprice=req.POST['of_price']
         stock=req.POST['p_stock']
-        if product:
-            Details.objects.filter(pk=product_id).update(product_id=product,weight=weight,price=price,off_price=offprice,stock=stock)
-            data=Details.objects.get(pk=product_id)
-            data.product=product
-            data.save()
-        else:
-                Details.objects.filter(pk=product_id).update(weight=weight,price=price,off_price=offprice,stock=stock)
+        data=Details.objects.create(product=Product.objects.get(pk=product),weight=weight,price=price,off_price=offprice,stock=stock)
+        data.save()
         return redirect(shop_home)
-    else:
-         data=Product.objects.get(pk=product_id)
-    return render(req,'shop/editdetails.html',{'data':data}) 
-    
+    else:      
+        data=Details.objects.filter(product=pid)
+        data1=Product.objects.get(pk=pid)
+        return render(req,'shop/editdetails.html',{'data':data,'data1':data1}) 
+def deletedetails(req,pid):
+     data=Details.objects.get(pk=pid)
+     data.delete()
+     return redirect(shop_home)
+
 def delete_product(req,pid):
     data=Product.objects.get(pk=pid)
     file=data.img.url
@@ -161,7 +161,13 @@ def register(req):
         
 def user_home(req):
     if 'user' in req.session:
-        product=Details.objects.all()
-        return render(req,'user/user.html',{'products':product})
+        product=Product.objects.all()
+        data=Details.objects.all()
+        return render(req,'user/user.html',{'products':product,'data':data})
+    
+def view_pro(req,pid):
+    data=Details.objects.get(pk=pid)
+    data1=Product.objects.get(pk=pid)
+    return render(req,'user/view_product',{'data':data,'data1':data1})
     
      
