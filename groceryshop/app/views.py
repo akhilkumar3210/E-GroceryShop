@@ -41,7 +41,7 @@ def gro_logout(req):
 
 def shop_home(req):
     if 'shop' in req.session:
-        data=Product.objects.all()
+        data=Product.objects.all()  
         data1=Details.objects.all()
         return render(req,'shop/shop.html',{'data':data,'data1':data1})
     else:
@@ -166,8 +166,8 @@ def user_home(req):
         return render(req,'user/user.html',{'products':product,'data':data})
     
 def view_pro(req,pid):
-    data=Details.objects.get(pk=pid)
-    data1=Product.objects.get(pk=pid)
-    return render(req,'user/view_product',{'data':data,'data1':data1})
+    data=Product.objects.get(pk=pid)
+    data1=Details.objects.filter(product=pid)
+    return render(req,'user/view_product.html',{'data':data,'data1':data1})
     
      

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    {%  load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/viewpro.css' %}">
@@ -10,22 +11,22 @@
 
 <body>
     <div class="product-container">
-        {% for i in data1 %}
             <div class="product-image">
-                <img src="{{i.img.url}}" alt="Product Image">
+                <img src="{{data.img.url}}" alt="Product Image">
             </div>
             <div class="product-details">
-                <h2 class="product-name">{{i.name}}</h2>
-                <p class="product-description">{{i.descri}}</p>
-                <p class="product-category">{{i.category.category}}</p>
-                <p class="product-price">Price: <span class="original-price">$100</span></p>
-                <p class="offer-price">Offer Price: <span>$80</span></p>
+                <h2 class="product-name">{{data.name}}</h2>
+                <p class="product-description">{{data.descri}}</p>
+                <p class="product-category">{{data.category.category}}</p>
+            {%  for i in data1 %}
+                <p class="product-category">{{i.weight}}ml</p>
+                <p class="product-price">Price: <span class="original-price">₹{{i.price}}</span></p>
+                <p class="offer-price">Offer Price: <span>₹{{i.off_price}}</span></p>
+            {% endfor %}
                 <div class="button-container">
                     <button class="add-to-cart">Add to Cart</button>
                     <button class="buy-now">Buy Now</button>
                 </div>
-        {% endfor %}
-    </div>
     </div>
 </body>
 
