@@ -9,7 +9,7 @@
     <title>Product Display</title>
 </head>
 
-<body>
+<body style="background-image: url(../static/img/grogo.jpeg);">
     <div class="product-container">
             <div class="product-image">
                 <img src="{{data.img.url}}" alt="Product Image">
@@ -24,7 +24,7 @@
                 <p class="offer-price">Offer Price: <span>₹{{i.off_price}}</span></p>
             {% endfor %}
                 <div class="button-container">
-                    <button class="add-to-cart">Add to Cart</button>
+                    <a href="../add_to_cart/{{data.pk}}"><button class="add-to-cart">Add to Cart</button></a>
                     <button class="buy-now">Buy Now</button>
                 </div>
     </div>

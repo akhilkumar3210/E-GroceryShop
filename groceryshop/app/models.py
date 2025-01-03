@@ -20,3 +20,8 @@ class Details(models.Model):
     price=models.IntegerField()
     off_price=models.IntegerField()
     stock=models.IntegerField() 
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    details = models.ForeignKey(Details, on_delete=models.CASCADE)
+    quantity = models.IntegerField()

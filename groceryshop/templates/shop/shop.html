@@ -22,7 +22,7 @@
         <ul class="nav-list">
             <li><a href="#">Home</a></li>
             <li><a href="addproduct">Add Product</a></li>
-            <li><a href="category">Add Categories</a></li>
+            <li><a href="categoryyy">Add Categories</a></li>
             <li><a href="details">Add Details</a></li>
             <li><a href="logout">Logout</a></li>
             <li><a href="#">Contact</a></li>
@@ -43,9 +43,9 @@
                         <p>{{i.category.category}}</p>
                 {% for j in data1 %} 
                 {% if j.product == i %}
-                        <h5>{{j.weight}}ml</h5>
-                        <h5 style="text-decoration: line-through;">₹{{j.price}}</h5>
-                        <h4>₹{{j.off_price}}</h4>
+                    <h5>{{j.weight}}ml</h5>
+                    <h5 style="text-decoration: line-through;">₹{{j.price}}</h5>
+                    <h4>₹{{j.off_price}}</h4>
                 {%  endif %}
                 {%  endfor %}
                         <a href="edit/{{i.pk}}" class="btn btn-primary">Edit</a>

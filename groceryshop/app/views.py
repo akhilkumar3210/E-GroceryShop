@@ -131,6 +131,7 @@ def editdetails(req,pid):
         data=Details.objects.filter(product=pid)
         data1=Product.objects.get(pk=pid)
         return render(req,'shop/editdetails.html',{'data':data,'data1':data1}) 
+    
 def deletedetails(req,pid):
      data=Details.objects.get(pk=pid)
      data.delete()
@@ -177,5 +178,40 @@ def view_pro(req,pid):
     data=Product.objects.get(pk=pid)
     data1=Details.objects.filter(product=pid)
     return render(req,'user/view_product.html',{'data':data,'data1':data1})
-    
-     
+
+def add_to_cart(req,pid):
+    details = Details.objects.get(pk=pid)
+    user = User.objects.get(username=req.session['user'])
+    try:
+        cart = Cart.objects.get(details=details, user=user)
+        cart.quantity += 1
+        cart.save()
+    except:
+        data = Cart.objects.create(details=details, user=user, quantity=1)
+        data.save()
+    return redirect(view_cart)
+
+def view_cart(req):
+    user = User.objects.get(username=req.session['user'])
+    data = Cart.objects.filter(user=user)
+    return render(req, 'user/cart.html', {'cart': data})
+
+def remove_item(req,id):
+    data=Cart.objects.get(pk=id)
+    data.delete()
+    return redirect(view_cart)
+
+def qty_add(req,cid):
+    data=Cart.objects.get(pk=cid)
+    if data.details.stock > data.quantity:
+        data.quantity+=1
+        data.save()
+    return redirect(view_cart)
+
+def qty_sub(req,cid):
+    data=Cart.objects.get(pk=cid)
+    data.quantity-=1
+    data.save()
+    if data.quantity==0:
+        data.delete()
+    return redirect(view_cart)
