@@ -31,7 +31,7 @@ body {
 }
 
 .product-description {
-    color: #555;
+    color: #080808;
 }
 
 .product-category {
@@ -40,7 +40,7 @@ body {
 
 .product-price {
     text-decoration: line-through;
-    color: #999;
+    color: #615f5f;
 }
 
 .offer-price {

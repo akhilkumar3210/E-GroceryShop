@@ -22,11 +22,11 @@
                 <p class="product-category">{{i.weight}}ml</p>
                 <p class="product-price">Price: <span class="original-price">₹{{i.price}}</span></p>
                 <p class="offer-price">Offer Price: <span>₹{{i.off_price}}</span></p>
-            {% endfor %}
                 <div class="button-container">
-                    <a href="../add_to_cart/{{data.pk}}"><button class="add-to-cart">Add to Cart</button></a>
-                    <button class="buy-now">Buy Now</button>
+                    <a href="../add_to_cart/{{i.pk}}"><button class="add-to-cart">Add to Cart</button></a>
+                    <a href="../order/{{i.pk}}"><button class="buy-now">Buy Now</button></a>
                 </div>
+            {% endfor %}     
     </div>
 </body>
 

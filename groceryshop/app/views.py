@@ -172,15 +172,21 @@ def user_home(req):
     if 'user' in req.session:
         product=Product.objects.all()
         data=Details.objects.all()
-        return render(req,'user/user.html',{'products':product,'data':data})
+        data1=Category.objects.all()
+        return render(req,'user/user.html',{'products':product,'data':data,'data1':data1})
+    
+def view_cat(req,id):
+    category = Category.objects.get(pk=id)
+    details = Details.objects.filter(product__category=category)
+    return render(req,'user/view_cat.html', {'category': category,'details': details})
     
 def view_pro(req,pid):
     data=Product.objects.get(pk=pid)
     data1=Details.objects.filter(product=pid)
     return render(req,'user/view_product.html',{'data':data,'data1':data1})
 
-def add_to_cart(req,pid):
-    details = Details.objects.get(pk=pid)
+def add_to_cart(req,id):
+    details = Details.objects.get(pk=id)
     user = User.objects.get(username=req.session['user'])
     try:
         cart = Cart.objects.get(details=details, user=user)
@@ -215,3 +221,7 @@ def qty_sub(req,cid):
     if data.quantity==0:
         data.delete()
     return redirect(view_cart)
+
+def order(req,pid):
+    data1=Details.objects.filter(pk=pid)
+    return render(req,'user/order.html',{'data1':data1})

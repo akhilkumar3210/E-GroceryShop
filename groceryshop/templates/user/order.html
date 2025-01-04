@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/order.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="order-summary">
+        <h2>Order Summary</h2>
+        {% for i in data1  %}
+        <div class="product">
+            <img src="{{i.product.img.url}}" alt="Product Name" class="product-img">
+            <div class="product-details">
+                <h3 class="product-name">{{i.product.name}}</h3>
+                <p class="product-description">{{i.product.descri}}</p>
+                <p class="product-category">Category: {{i.product.category.category}}</p>
+                <p class="product-category">{{i.weight}}ml</p>
+                <p class="product-price">Price: <span class="original-price">₹{{i.price}}</span></p>
+                <p class="offer-price">Offer Price: <span>₹{{i.off_price}}</span></p>
+            </div>
+        </div>
+        <button class="payment-button">Proceed to Payment</button>
+    </div>  
+    {% endfor %}
+</body>
+</html>

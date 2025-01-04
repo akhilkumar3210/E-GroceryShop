@@ -20,10 +20,11 @@
                 <p class="product-weight">{{i.details.weight}} ml</p>
                 <p class="product-price">Price: <span class="original-price">₹{{i.details.price}}</span> <span class="discounted-price">₹{{i.details.off_price}}</span></p>
                 <p><a href="qty_sub/{{i.id}}" ><button> - </button></a> Qty : {{i.quantity}} <a href="qty_add/{{i.id}}" > <button>+</button></a></p>
-                <button class="buy-button">Buy Now</button>
+                <a href=""><button class="buy-button">Buy Now</button></a>
             </div>
         </div>
     {% endfor %}
+    <a href="../shop_home"><button>Back</button></a>
     </div>
 </body>
 </html>
