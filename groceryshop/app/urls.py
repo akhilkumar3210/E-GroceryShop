@@ -30,7 +30,7 @@ urlpatterns=[
     path('qty_sub/<cid>',views.qty_sub),
     path('view_cat/<id>',views.view_cat),
     path('order/<pid>',views.order),
-
+    path('address',views.address),
 
 
 ]

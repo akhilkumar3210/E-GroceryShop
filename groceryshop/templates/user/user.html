@@ -21,14 +21,20 @@
         </div>
         <ul class="nav-list">
             <li><a href="#">Home</a></li>
-            <li><label for="Categories">Categories</label>
-                <select id="" name="Categories">
-                    {%  for i in data1 %}
-                        <option><a href="view_cat/{{i.pk}}">{{i.category}}</a></option>
-                    {% endfor %}
-                </select>
+            <li>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-outline-dark text-white     btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for i in data1 %}
+                        <li><a class="dropdown-item bg-black" href="view_cat/{{i.pk }}">{{i.category}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </li>
             <li><a href="logout">Logout</a></li>
+            <li><a href="address">Add Address</a></li>
             <li><a href="cart">Cart</a></li>
         </ul>
     </nav>
@@ -47,7 +53,7 @@
                             <p>{{i.category.category}}</p>
                             {% for j in data %}
                             {% if j.product == i %}
-                            <h5>{{j.weight}}ml</h5>
+                            <h5>{{j.weight}}ml&G</h5>
                             <h5 style="text-decoration: line-through;">₹{{j.price}}</h5>
                             <h4>₹{{j.off_price}}</h4>
                             {% endif %}
@@ -56,7 +62,7 @@
                     </div>
                 </div>
             </a>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 </body>

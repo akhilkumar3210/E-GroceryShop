@@ -225,3 +225,27 @@ def qty_sub(req,cid):
 def order(req,pid):
     data1=Details.objects.filter(pk=pid)
     return render(req,'user/order.html',{'data1':data1})
+
+def address(req,pid):
+     if 'user' in req.session:
+        details=Details.objects.get(pk=pid)
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+     if data:
+            return render(req,'user/address.html',{'details':details,'data':data})
+     else:
+            if req.method == 'POST':
+                    user=User.objects.get(username=req.session['user'])
+                    name=req.POST['name']
+                    address=req.POST['address']
+                    street=req.POST['street']
+                    city=req.POST['city']
+                    state=req.POST['state']
+                    pin=req.POST['pin']
+                    phone=req.POST['phone']
+                    data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
+                    data.save()
+                    redirect(user_home)
+            else:
+                data=Address.objects.all()
+                return render(req,'user/address.html',{'address':data})

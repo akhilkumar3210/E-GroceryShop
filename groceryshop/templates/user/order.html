@@ -10,6 +10,12 @@
 <body>
     <div class="order-summary">
         <h2>Order Summary</h2>
+        <div>
+            <label for="product">Shipping Address</label>
+            <select id="product" name="product" required>
+                <option value="product1"></option>
+            </select>
+        </div>
         {% for i in data1  %}
         <div class="product">
             <img src="{{i.product.img.url}}" alt="Product Name" class="product-img">
