@@ -18,16 +18,37 @@
                 <h2 class="product-name">{{data.name}}</h2>
                 <p class="product-description">{{data.descri}}</p>
                 <p class="product-category">{{data.category.category}}</p>
-            {%  for i in data1 %}
-                <p class="product-category">{{i.weight}}ml</p>
-                <p class="product-price">Price: <span class="original-price">₹{{i.price}}</span></p>
-                <p class="offer-price">Offer Price: <span>₹{{i.off_price}}</span></p>
+                {% if data2.stock > 0 %}
+                <h4 class=""> ONLY {{data2.stock}} LEFT</h4>
+                {% else %}
+                <h4>OUT OF STOCK </h4>
+                {% endif %}
+                {% for j in data1 %}
+                <label class="" for="">
+                <input type="radio" onchange="get_correct_price('{{j.pk}}')" name="select" {% if data2.pk == j.pk %} checked {% endif %}  id="">
+                <div class="label">{{j.weight}}</div>
+                </label>
+                {% endfor %} 
+                <p class="product-price">Price: <span class="original-price">₹{{data2.price}}</span></p>
+                <p class="offer-price">Offer Price: <span>₹{{data2.off_price}}</span></p>
+                {% if data2.stock > 0 %}
                 <div class="button-container">
-                    <a href="../add_to_cart/{{i.pk}}"><button class="add-to-cart">Add to Cart</button></a>
-                    <a href="../order/{{i.pk}}"><button class="buy-now">Buy Now</button></a>
+                    <a href="../add_to_cart/{{data2.pk}}"><button class="add-to-cart">Add to Cart</button></a>
+                    <a href="../order/{{data2.pk}}"><button class="buy-now">Buy Now</button></a>
                 </div>
-            {% endfor %}     
+                {% else %}
+            
+                {% endif %}
+           
+        
     </div>
+    <script>
+        function get_correct_price(dis){
+          window.location.href = window.location.pathname + `?dis=${dis}`
+        }
+      </script>
+    <a href="../shop_home"><button>Back</button></a>
+
 </body>
 
 </html>

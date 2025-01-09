@@ -22,7 +22,7 @@
                 <p class="product-weight">{{i.details.weight}} ml&G&L</p>
                 <p class="product-price">Price: <span class="original-price">₹{{i.details.price}}</span> <span class="discounted-price">₹{{i.details.off_price}}</span></p>
                 <p><a href="qty_sub/{{i.id}}" ><button> - </button></a> Qty : {{i.quantity}} <a href="qty_add/{{i.id}}" > <button>+</button></a></p>
-                <a href=""><button class="buy-button">Buy Now</button></a>
+                <a href="../cartbuy/{{i.pk}}"><button class="buy-button">Buy Now</button></a>
             </div>
         </div>
     {% endfor %}

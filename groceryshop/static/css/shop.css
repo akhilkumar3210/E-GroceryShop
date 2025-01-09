@@ -12,8 +12,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
+    background-color: rgba(255, 255, 255, 0.5); /* Transparent background */
+    backdrop-filter: blur(50px); /* Optional: adds a blur effect */
+    transition: background-color 0.3s ease;
     padding: 10px 20px;
+    position: fixed; /* Fixed position */
+    top: 0; /* Stick to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it stays on top */
+    overflow: hidden;
 }
 
 .logo {
@@ -31,14 +38,14 @@ body {
 }
 
 .nav-list a {
-    color: white;
     text-decoration: none;
-    padding: 5px 10px;
-    transition: background 0.3s;
+    color: #000000;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .nav-list a:hover {
-    background-color: #575757;
+    background-color: #ececec;
 }
 
 .menu-toggle {
@@ -86,6 +93,9 @@ body {
 .container {
     max-width: 600px;
     margin: 0 auto;
+    padding: 16px;
+    margin-top: 30px;
+    height: 1500px; 
 }
 .product-info {
     margin-bottom: 20px;

@@ -76,10 +76,12 @@ def categoryyy(req):
             return render(req,'shop/category.html',{'data':data})
     else:
          return redirect(gro_login)
+    
 def delete_cat(req,id):
      data=Category.objects.get(pk=id)
      data.delete()
      return redirect(categoryyy)
+
 def view_category(req,id):
     category = Category.objects.get(pk=id)
     details = Details.objects.filter(product__category=category)
@@ -183,7 +185,11 @@ def view_cat(req,id):
 def view_pro(req,pid):
     data=Product.objects.get(pk=pid)
     data1=Details.objects.filter(product=pid)
-    return render(req,'user/view_product.html',{'data':data,'data1':data1})
+    data2=Details.objects.get(product=pid,pk=data1[0].pk)
+    if req.GET.get('dis'):
+            dis=req.GET.get('dis')
+            data2=Details.objects.get(product=pid,pk=dis)
+    return render(req,'user/view_product.html',{'data':data,'data1':data1,'data2':data2})
 
 def add_to_cart(req,id):
     details = Details.objects.get(pk=id)
@@ -245,3 +251,37 @@ def address(req):
             return redirect(user_home)
         else:
             return render(req,'user/address.html')
+
+
+def buy_product(req,pid):
+    detail=Details.objects.get(pk=pid)
+    user=User.objects.get(username=req.session['user'])
+    quantity=1
+    price=detail.off_price
+    buy=Buy.objects.create(details=detail,user=user,quantity=quantity,tot_price=price)
+    buy.save()
+    return redirect(user_bookings)
+
+def cart_buy(req,cid):
+    cart=Cart.objects.get(pk=cid)
+    price=cart.quantity*cart.details.off_price
+    stock=cart.details.stock-cart.quantity
+    
+    if stock==0:
+        messages.warning(req,'Out of Stock!!!'+cart.details.product.name)
+        return redirect(view_cart)
+    buy=Buy.objects.create(details=cart.details,user=cart.user,quantity=cart.quantity,tot_price=price)
+    buy.save()
+    return redirect(user_bookings)
+
+
+
+def user_bookings(req):
+    user=User.objects.get(username=req.session['user'])
+    bookings=Buy.objects.filter(user=user)[::-1]
+    return render(req,'user/user_bookings.html',{'bookings':bookings})
+
+def bookings(req):
+    bookings=Buy.objects.all()[::-1]
+    data=Address.objects.all()
+    return render(req,'shop/bookings.html',{'bookings':bookings,'data':data})

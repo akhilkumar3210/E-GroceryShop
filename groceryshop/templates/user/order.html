@@ -19,7 +19,7 @@
             
             <select id="product" name="product" required>
                 {% for j in data  %}
-                <option value="{{i}}">{{i.name}},{{i.address}},{{i.street}},{{i.city}}</option>
+                <option value="{{j}}">{{j.name}},{{j.address}},{{j.street}},{{j.city}},{{j.state}},{{j.pincode}},{{j.phone}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -35,7 +35,7 @@
                 <p class="offer-price">Offer Price: <span>₹{{i.off_price}}</span></p>
             </div>
         </div>
-        <button class="payment-button">Proceed to Payment</button>
+        <a href="../buy_pro/{{i.pk}}"><button class="payment-button">Proceed </button></a>
     </div>  
     {% endfor %}
 </body>

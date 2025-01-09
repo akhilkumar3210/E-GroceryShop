@@ -15,7 +15,7 @@ urlpatterns=[
     path('editdetails/<pid>',views.editdetails),
     path('delete_details/<pid>',views.deletedetails),
     path('viewpro/<pid>',views.view_pro),
-
+    path('bookings',views.bookings),
 
 
 
@@ -31,6 +31,9 @@ urlpatterns=[
     path('view_cat/<id>',views.view_cat),
     path('order/<pid>',views.order),
     path('address',views.address),
-
+    path('buy_pro/<pid>',views.buy_product),
+    path('user_book',views.user_bookings),
+    path('cartbuy/<cid>',views.cart_buy),
+    
 
 ]
