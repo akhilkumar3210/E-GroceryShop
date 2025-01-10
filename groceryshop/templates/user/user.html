@@ -46,7 +46,7 @@
         <div class="row">
         {% for i in products %}
                 <div class="col-lg-4 mb-4">
-                    <a href="viewpro/{{i.pk}}" style="text-decoration: none;"></a>
+                    <a href="viewpro/{{i.pk}}" style="text-decoration: none;">
                     <div class="card" style="width:400px">
                         <img class="card-img-top" src="{{i.img.url}}" alt="Card image" style="width:100%"
                             height="350px">
@@ -62,9 +62,10 @@
                             {% endif %}
                             {% endfor %} -->
                         </div>
+                    </a>
                     </div>
                 </div>
-            </a>
+            
         {% endfor %}
         </div>
     </div>
