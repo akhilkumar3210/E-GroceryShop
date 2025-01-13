@@ -147,7 +147,9 @@ def delete_product(req,pid):
     data.delete()
     return redirect(shop_home)
 
-
+def bookings(req):
+    bookings=Buy.objects.all()[::-1]
+    return render(req,'shop/bookings.html',{'booking':bookings})
 
 
 
@@ -229,36 +231,56 @@ def qty_sub(req,cid):
     return redirect(view_cart)
 
 def order(req,pid):
-    data1=Details.objects.filter(pk=pid)
-    data=Address.objects.all()
-    return render(req,'user/order.html',{'data1':data1,'data':data})
-
-def address(req):
-     if 'user' in req.session:
+    if 'user' in req.session:
+        data1=Details.objects.filter(pk=pid)
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
-        if req.method=='POST':
-            user=User.objects.get(username=req.session['user'])
-            name=req.POST['name']
-            address=req.POST['address']
-            street=req.POST['street']
-            city=req.POST['city']
-            state=req.POST['state']
-            pin=req.POST['pin']
-            phone=req.POST['phone']
-            data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
-            data.save()
-            return redirect(user_home)
+        if data:
+            return redirect("order",data1=data1.pk,data=data,)
         else:
-            return render(req,'user/address.html')
+            if req.method=='POST':
+                user=User.objects.get(username=req.session['user'])
+                name=req.POST['name']
+                address=req.POST['address']
+                street=req.POST['street']
+                city=req.POST['city']
+                state=req.POST['state']
+                pin=req.POST['pin']
+                phone=req.POST['phone']
+                data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
+                data.save()
+                return redirect('order',data1=data1.pk,data=data,)
+            else:
+                  return render(req,'user/order.html',{'data1':data1,'data':data})  
+    else:
+        return redirect(gro_login)
+# def address(req):
+#      if 'user' in req.session:
+#         user=User.objects.get(username=req.session['user'])
+#         data=Address.objects.filter(user=user)
+#         if req.method=='POST':
+#             user=User.objects.get(username=req.session['user'])
+#             name=req.POST['name']
+#             address=req.POST['address']
+#             street=req.POST['street']
+#             city=req.POST['city']
+#             state=req.POST['state']
+#             pin=req.POST['pin']
+#             phone=req.POST['phone']
+#             data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
+#             data.save()
+#             return redirect(user_home)
+#         else:
+#             return render(req,'user/address.html')
 
 
-def buy_product(req,pid):
+def buy_product(req,pid,):
     detail=Details.objects.get(pk=pid)
     user=User.objects.get(username=req.session['user'])
     quantity=1
     price=detail.off_price
-    buy=Buy.objects.create(details=detail,user=user,quantity=quantity,tot_price=price)
+    address=Address.objects.all()
+    buy=Buy.objects.create(details=detail,user=user,quantity=quantity,tot_price=price,address=address)
     buy.save()
     return redirect(user_bookings)
 
@@ -283,5 +305,4 @@ def user_bookings(req):
 
 def bookings(req):
     bookings=Buy.objects.all()[::-1]
-    data=Address.objects.all()
-    return render(req,'shop/bookings.html',{'bookings':bookings,'data':data})
+    return render(req,'shop/bookings.html',{'bookings':bookings})

@@ -26,13 +26,6 @@ class Cart(models.Model):
     details = models.ForeignKey(Details, on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
-class Buy(models.Model):
-    details =models.ForeignKey(Details,on_delete=models.CASCADE)
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    quantity=models.IntegerField()
-    tot_price=models.IntegerField()
-    date=models.DateField(auto_now_add=True)
-
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name=models.TextField()
@@ -42,3 +35,11 @@ class Address(models.Model):
     state=models.TextField()
     pincode=models.IntegerField()
     phone=models.IntegerField()
+
+class Buy(models.Model):
+    details =models.ForeignKey(Details,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    address=models.ForeignKey(Address,on_delete=models.CASCADE)
+    quantity=models.IntegerField()
+    tot_price=models.IntegerField()
+    date=models.DateField(auto_now_add=True)
