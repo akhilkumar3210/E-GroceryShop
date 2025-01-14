@@ -149,7 +149,7 @@ def delete_product(req,pid):
 
 def bookings(req):
     bookings=Buy.objects.all()[::-1]
-    return render(req,'shop/bookings.html',{'booking':bookings})
+    return render(req,'shop/bookings.html',{'bookings':bookings})
 
 
 
@@ -230,13 +230,13 @@ def qty_sub(req,cid):
         data.delete()
     return redirect(view_cart)
 
-def order(req,pid):
+def buyNow(req,pid):
     if 'user' in req.session:
-        data1=Details.objects.filter(pk=pid)
+        prod=Details.objects.get(pk=pid)
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
         if data:
-            return redirect("order",data1=data1.pk,data=data,)
+            return redirect("orderSummary",prod=prod.pk,data=data)
         else:
             if req.method=='POST':
                 user=User.objects.get(username=req.session['user'])
@@ -249,13 +249,62 @@ def order(req,pid):
                 phone=req.POST['phone']
                 data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
                 data.save()
-                return redirect('order',data1=data1.pk,data=data,)
+                return redirect("orderSummary",prod=prod.pk,data=data)
             else:
-                  return render(req,'user/order.html',{'data1':data1,'data':data})  
+                return render(req,"user/address.html")
+    else:
+        return redirect(gro_login) 
+    
+def orderSummary(req,prod,data):
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=prod)
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method == 'POST':
+            address=req.POST['address']
+            addr=Address.objects.get(user=user,pk=address)
+        else:
+            return render(req,'user/order.html',{'prod':prod,'data':data})
+        print(prod.pk)
+        addr=addr.pk
+        return redirect("payment",pid=prod.pk,address=addr)   
     else:
         return redirect(gro_login)
-# def address(req):
+
+def payment(req,pid,address):
+    if 'user' in req.session:
+        # user=User.objects.get(username=req.session['user'])
+        data=Details.objects.get(pk=pid)
+        price=data.off_price
+        addr=Address.objects.get(pk=address)
+        return render(req,'user/payment.html',{'price':price,'data':data,'address':addr})
+    else:
+        return redirect(gro_login) 
+
+def address(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method=='POST':
+            user=User.objects.get(username=req.session['user'])
+            name=req.POST['name']
+            phn=req.POST['phn']
+            house=req.POST['house']
+            street=req.POST['street']
+            pin=req.POST['pin']
+            state=req.POST['state']
+            data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
+            data.save()
+            return redirect(address)
+        else:
+            return render(req,"user/address.html",{'data':data})
+    else:
+        return redirect(gro_login) 
+    
+
+# def address(req,pid):
 #      if 'user' in req.session:
+#         detail=Details.objects.get(pk=pid)
 #         user=User.objects.get(username=req.session['user'])
 #         data=Address.objects.filter(user=user)
 #         if req.method=='POST':
@@ -269,19 +318,36 @@ def order(req,pid):
 #             phone=req.POST['phone']
 #             data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
 #             data.save()
-#             return redirect(user_home)
+#             return redirect('order',detail=detail.pk,data=data)
 #         else:
 #             return render(req,'user/address.html')
 
+# def order(req,detail):
+#     if 'user' in req.session:
+#         data1=Details.objects.get(pk=detail)
+#         user=User.objects.get(username=req.session['user'])
+#         data=Address.objects.filter(user=user)
+#         if req.method == 'POST':
+#             address=req.POST['address']
+#             addr=Address.objects.get(user=user,pk=address)
+#         else:
+#             return render(req,'user/order.html',{'data1':data1,'data':data}) 
+#         print(detail.pk)
+#         addr=addr.pk
+#         return redirect("payment",pid=detail.pk,address=addr) 
+#     else:
+#         return redirect(gro_login)
 
-def buy_product(req,pid,):
-    detail=Details.objects.get(pk=pid)
+
+def buy_product(req,pid,address):
+    prod=Details.objects.get(pk=pid)
     user=User.objects.get(username=req.session['user'])
     quantity=1
-    price=detail.off_price
-    address=Address.objects.all()
-    buy=Buy.objects.create(details=detail,user=user,quantity=quantity,tot_price=price,address=address)
+    price=prod.off_price
+    buy=Buy.objects.create(details=prod,user=user,quantity=quantity,tot_price=price,address=Address.objects.get(pk=address))
     buy.save()
+    prod.stock-=1
+    prod.save()
     return redirect(user_bookings)
 
 def cart_buy(req,cid):

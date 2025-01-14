@@ -29,10 +29,13 @@ urlpatterns=[
     path('qty_add/<cid>',views.qty_add),
     path('qty_sub/<cid>',views.qty_sub),
     path('view_cat/<id>',views.view_cat),
-    path('order/<pid>',views.order,name='order'),
+    path('buynow/<pid>',views.buyNow),
+    path('orderSummary/<prod>/<data>',views.orderSummary,name="orderSummary"),
+    path('payment/<pid>/<address>',views.payment,name="payment"),
+    path('address',views.address),
     # path('address',views.address),
-    path('buy_pro/<pid>',views.buy_product),
-    path('user_book',views.user_bookings),
+    path('buy_pro/<pid>/<address>',views.buy_product),
+    path('user_book',views.user_bookings,name='userbook'),
     path('cartbuy/<cid>',views.cart_buy),
     
 

@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        {%  for i in booking %}
+        {%  for i in bookings %}
         <h1>Order Placed</h1>
         <div class="order-details">
             <h2>Product Details</h2>
@@ -26,12 +26,12 @@
         <div class="customer-info">
             <h2>Customer Information</h2>
             <p><strong>Name:</strong>{{i.address.name}}</p>
-            <p><strong>Phone:</strong>{{j.phone}}</p>
-            <p><strong>Address:</strong>{{j.address}}</p>
-            <p><strong>City:</strong>{{j.street}} </p>
-            <p><strong>City:</strong>{{j.city}} </p>
-            <p><strong>State:</strong>{{j.state}}</p>
-            <p><strong>PIN:</strong> {{j.pincode}}</p>
+            <p><strong>Phone:</strong>{{i.address.phone}}</p>
+            <p><strong>Address:</strong>{{i.address.address}}</p>
+            <p><strong>City:</strong>{{i.address.street}} </p>
+            <p><strong>City:</strong>{{i.address.city}} </p>
+            <p><strong>State:</strong>{{i.address.state}}</p>
+            <p><strong>PIN:</strong> {{i.address.pincode}}</p>
         </div>
     {% endfor %}
     </div>

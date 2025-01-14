@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -9,34 +10,64 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <title>Document</title>
 </head>
+
 <body>
-    <div class="order-summary">
+    <!-- <div class="order-summary">
         <h2>Order Summary</h2>
-        
+
         <div>
             <label for="product">Shipping Address</label>
-            <!-- <a href="../address"><button class="btn btn-outline-dark">Add Address</button></a> -->
-            
-            <select id="product" name="product" required>
-                {% for j in data  %}
-                <option value="{{j}}">{{j.name}},{{j.address}},{{j.street}},{{j.city}},{{j.state}},{{j.pincode}},{{j.phone}}</option>
-                {% endfor %}
-            </select>
+            <a href="../address"><button class="btn btn-outline-dark">Add Address</button></a>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <select id="address" name="address" required>
+                    {% for j in data %}
+                    <option value="{{j}}">
+                        {{j.name}},{{j.address}},{{j.street}},{{j.city}},{{j.state}},{{j.pincode}},{{j.phone}}</option>
+                    {% endfor %}
+                </select>
+                <a href="../../../address">Add new address + </a>
         </div>
         <div class="product">
-        {% for i in data1  %}
-            <img src="{{i.product.img.url}}" alt="Product Name" class="product-img">
+            <img src="{{prod.product.img.url}}" alt="Product Name" class="product-img">
             <div class="product-details">
-                <h3 class="product-name">{{i.product.name}}</h3>
-                <p class="product-description">{{i.product.descri}}</p>
-                <p class="product-category">Category: {{i.product.category.category}}</p>
-                <p class="product-category">{{i.weight}}ml</p>
-                <p class="product-price">Price: <span class="original-price">₹{{i.price}}</span></p>
-                <p class="offer-price">Offer Price: <span>₹{{i.off_price}}</span></p>
+                <h3 class="product-name">{{prod.product.name}}</h3>
+                <p class="product-description">{{prod.product.descri}}</p>
+                <p class="product-category">Category: {{prod.product.category.category}}</p>
+                <p class="product-category">{{prod.weight}}ml</p>
+                <p class="product-price">Price: <span class="original-price">₹{{prod.price}}</span></p>
+                <p class="offer-price">Offer Price: <span>₹{{prod.off_price}}</span></p>
+                <button type="submit" class="payment-button">Proceed </button>
+            </div>
+            </form>
+        </div>
+
+    </div> -->
+    <div class="order-summary">
+        <div class="row">
+            <div class="col-lg-12">
+                <img src="{{prod.product.img.url}}" alt=""class="product-img">
+            </div>
+            <div class="col-lg-8">
+              <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for=""> Customer Address : </label><br>
+                <select name="address" id="address">
+                  {% for i in data %}
+                    <option value="{{i.pk}}">{{i.name}},{{i.phone}},{{i.address}},{{i.street}},{{i.pin}},{{i.state}}</option>
+                  {% endfor %}
+                </select>
+                <a href="../../../address">Add new address + </a><br><br>
+                <h3 class="product-name">{{prod.product.name}}</h3>
+                <p class="product-description">{{prod.product.descri}}</p>
+                <p class="product-category">Category: {{prod.product.category.category}}</p>
+                <p class="product-price" >Price:<span class="original-price">₹{{prod.price}}</span></p>
+                <p class="offer-price">Offer Price: <span>₹{{prod.off_price}}</span></p>
+                <button type="submit" class="btn btn-primary">proceed</button>
+              </form>             
             </div>
         </div>
-        <a href="../buy_pro/{{i.pk}}"><button class="payment-button">Proceed </button></a>
-    </div>  
-    {% endfor %}
+    </div>
 </body>
+
 </html>
