@@ -31,12 +31,14 @@ urlpatterns=[
     path('view_cat/<id>',views.view_cat),
     path('buynow/<pid>',views.buyNow),
     path('orderSummary/<prod>/<data>',views.orderSummary,name="orderSummary"),
+    path('orderSummary2/<cart>',views.orderSummary2,name="orderSummary2"),
     path('payment/<pid>/<address>',views.payment,name="payment"),
     path('address',views.address),
+    path('buycart/<cid>',views.carbuy),
     # path('address',views.address),
     path('buy_pro/<pid>/<address>',views.buy_product),
     path('user_book',views.user_bookings,name='userbook'),
-    path('cartbuy/<cid>',views.cart_buy),
+    # path('cartbuy/<cid>',views.cart_buy),
     
 
 ]

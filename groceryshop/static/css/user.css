@@ -19,11 +19,7 @@ body {
     background-color: #ffffff;
     padding: 10px 20px;
     position: fixed; /* Fixes the navbar at the top */
-    top: 0; /* Positions it at the top */
-    width: 100%; /* Full width */
-    z-index: 1000; /* Ensures it stays above other content */
 }
-
 .logo {
     color: white;
     font-size: 24px;
@@ -32,12 +28,16 @@ body {
 .nav-list {
     list-style: none;
     display: flex;
+   
 }
 
 .nav-list li {
     margin: 0 15px;
 }
 
+.dropdown{
+    margin-top: -7.5px;
+}
 /* .nav-list a {
     color: rgb(0, 0, 0);
     text-decoration: none;

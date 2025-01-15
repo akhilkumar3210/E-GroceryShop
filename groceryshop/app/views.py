@@ -302,6 +302,49 @@ def address(req):
         return redirect(gro_login) 
     
 
+def carbuy(req,cid):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.get(pk=cid)
+        # price=0
+        # for i in cart:
+        #      price+=(i.details.off_price)*i.quantity
+        data=Address.objects.filter(user=user)
+        if data:
+            # return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
+            return redirect("orderSummary2",cart=cart)
+        else:
+            if req.method=='POST':
+                user=User.objects.get(username=req.session['user'])
+                name=req.POST['name']
+                phn=req.POST['phn']
+                house=req.POST['house']
+                street=req.POST['street']
+                pin=req.POST['pin']
+                state=req.POST['state']
+                data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
+                data.save()
+                return redirect("orderSummary2",cart=cart)
+            else:
+                return render(req,"user/address.html")
+    else:
+        return redirect(gro_login) 
+    
+def orderSummary2(req,cart):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        carts=Cart.objects.get(pk=cart)
+        if req.method == 'POST':
+            address=req.POST['address']
+            addr=Address.objects.get(user=user,pk=address)
+        else:
+            return render(req,'user/cartorder.html',{'data2':carts,'data':data})
+        addr=addr.pk
+        return redirect("payment2",address=addr)    
+    else:
+        return redirect(gro_login)
+
 # def address(req,pid):
 #      if 'user' in req.session:
 #         detail=Details.objects.get(pk=pid)
@@ -350,17 +393,17 @@ def buy_product(req,pid,address):
     prod.save()
     return redirect(user_bookings)
 
-def cart_buy(req,cid):
-    cart=Cart.objects.get(pk=cid)
-    price=cart.quantity*cart.details.off_price
-    stock=cart.details.stock-cart.quantity
+# def cart_buy(req,cid):
+#     cart=Cart.objects.get(pk=cid)
+#     price=cart.quantity*cart.details.off_price
+#     stock=cart.details.stock-cart.quantity
     
-    if stock==0:
-        messages.warning(req,'Out of Stock!!!'+cart.details.product.name)
-        return redirect(view_cart)
-    buy=Buy.objects.create(details=cart.details,user=cart.user,quantity=cart.quantity,tot_price=price)
-    buy.save()
-    return redirect(user_bookings)
+#     if stock==0:
+#         messages.warning(req,'Out of Stock!!!'+cart.details.product.name)
+#         return redirect(view_cart)
+#     buy=Buy.objects.create(details=cart.details,user=cart.user,quantity=cart.quantity,tot_price=price)
+#     buy.save()
+#     return redirect(user_bookings)
 
 
 
