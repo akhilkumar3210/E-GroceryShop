@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 urlpatterns=[
     path('',views.gro_login),
+    path('validate/<name>/<password>/<email>/<otp>',views.validate,name="validate"),
     path('logout',views.gro_logout),
     # ----------------------------------------------admin-----------------------------------------------------------------------
     path('shop_home',views.shop_home),
@@ -31,14 +32,19 @@ urlpatterns=[
     path('view_cat/<id>',views.view_cat),
     path('buynow/<pid>',views.buyNow),
     path('orderSummary/<prod>/<data>',views.orderSummary,name="orderSummary"),
-    path('orderSummary2/<cart>',views.orderSummary2,name="orderSummary2"),
+    path('orderSummary2/<price>/<total>',views.orderSummary2,name="orderSummary2"),
     path('payment/<pid>/<address>',views.payment,name="payment"),
     path('address',views.address),
-    path('buycart/<cid>',views.carbuy),
+    path('buycart',views.carbuy),
+    path('payment2/<address>',views.payment2,name="payment2"),
+    path('book2/<address>',views.book2),
     # path('address',views.address),
     path('buy_pro/<pid>/<address>',views.buy_product),
     path('user_book',views.user_bookings,name='userbook'),
     # path('cartbuy/<cid>',views.cart_buy),
+    path('deleteBookings/<pid>',views.deleteBookings),
+    path('delete_address/<pid>',views.delete_address),
+
     
 
 ]

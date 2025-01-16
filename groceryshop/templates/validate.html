@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Input Form</title>
+    <link rel="stylesheet" href="{% static 'css/validate.css' %}">
+</head>
+<body style="background-image: url(../static/img/grogo.jpeg);" >
+    <div class="container">
+        <img src="{% static 'img/logo-png.png' %}" alt="" width="400px" height="100px">
+        <h2>Enter OTP</h2>
+        <form action="" method="post" >
+            {% csrf_token %}
+            <input type="text" id="" name="uotp" placeholder="Enter OTP"  required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

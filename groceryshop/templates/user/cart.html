@@ -10,8 +10,38 @@
     <title>Cart Page</title>
 </head>
 <body>
+    <nav class="navbar fixed-top  ">
+        <div class="logo"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-list">
+            <li><a href="../../user_home">Home</a></li>
+            <li>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-white text-dark     btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for i in cat %}
+                        <li><a class="dropdown-item " href="../../view_cat/{{i.pk }}">{{i.category}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            <!-- <li><a href="../address">Add Address</a></li> -->
+            <li><a href="../../cart">Cart</a></li>
+            <li><a href="../../user_book">Order Placed</a></li>
+            <li><a href="../../logout">Logout</a></li>
+
+
+        </ul>
+    </nav>
     <div class="cart-container">
         <h1>Your Cart</h1>
+    {% if cart %}
     {%  for i in cart %}
         <div class="cart-item">
             <img src="{{i.details.product.img.url}}" alt="Product 1" class="product-image">
@@ -21,12 +51,21 @@
                 <p class="product-weight">{{i.details.product.category.category}}</p>
                 <p class="product-weight">{{i.details.weight}} ml&G&L</p>
                 <p class="product-price">Price: <span class="original-price">₹{{i.details.price}}</span> <span class="discounted-price">₹{{i.details.off_price}}</span></p>
-                <p><a href="qty_sub/{{i.id}}" ><button> - </button></a> Qty : {{i.quantity}} <a href="qty_add/{{i.id}}" > <button>+</button></a></p>
-                <a href="buycart/{{i.pk}}"><button class="buy-button">Buy Now</button></a>
+                <p><a href="qty_sub/{{i.id}}" class="btn btn-info" >- </a> Qty : {{i.quantity}} <a href="qty_add/{{i.id}}" class="btn btn-info" >+</a></p>
+                <!-- <a href="buycart/{{i.pk}}"><button class="buy-button">Buy Now</button></a> -->
             </div>
         </div>
     {% endfor %}
-    <a href="../shop_home"><button class="btn btn-outline-success">Back</button></a>
+    <!-- <a href="../shop_home"><button class="btn btn-outline-success">Back</button></a> -->
+    <div class="row">
+        <div class="col-lg-6">
+          <h2>Total Amount:₹{{total}}</h2>
+        </div>
+        <div class="col-lg-6">
+          <a class="btn btn-outline-primary"   href="buycart">CHECKOUT CART</a>
+        </div>
+      </div>
+     {%  endif %}
     </div>
 </body>
 </html>

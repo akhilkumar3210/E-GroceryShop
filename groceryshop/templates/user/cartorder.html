@@ -12,6 +12,35 @@
 </head>
 
 <body>
+    <nav class="navbar fixed-top  ">
+        <div class="logo"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-list">
+            <li><a href="../../user_home">Home</a></li>
+            <li>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-white text-dark     btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for i in cat %}
+                        <li><a class="dropdown-item " href="../../view_cat/{{i.pk }}">{{i.category}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            <!-- <li><a href="../address">Add Address</a></li> -->
+            <li><a href="../../cart">Cart</a></li>
+            <li><a href="../../user_book">Order Placed</a></li>
+            <li><a href="../../logout">Logout</a></li>
+
+
+        </ul>
+    </nav>
     <!-- <div class="order-summary">
         <h2>Order Summary</h2>
 
@@ -55,18 +84,25 @@
                   {% endfor %}
                 </select>
                 <a href="../../../address">Add new address + </a><br><br>
+                {%  for i in data2 %}
                 <div class="col-lg-12">
-                    <img src="{{data2.details.product.img.url}}" alt=""class="product-img">
+                    <img src="{{i.details.product.img.url}}" alt=""class="product-img">
                 </div>
-                <h3 class="product-name">{{prod.product.name}}</h3>
-                <p class="product-description">{{prod.product.descri}}</p>
-                <p class="product-category">Category: {{prod.product.category.category}}</p>
-                <p class="product-price" >Price:<span class="original-price">₹{{prod.price}}</span></p>
-                <p class="offer-price">Offer Price: <span>₹{{prod.off_price}}</span></p>
-                <button type="submit" class="btn btn-primary">proceed</button>
+                <h3 class="product-name">{{i.details.product.name}}</h3>
+                <p class="product-description">{{i.details.product.descri}}</p>
+                <p class="product-description">{{i.quantity}}</p>
+                <p class="product-category">Category: {{i.details.product.category.category}}</p>
+                <p class="product-price" >Price:<span class="original-price">₹{{i.details.price}}</span></p>
+                <p class="offer-price">Offer Price: <span>₹{{i.details.off_price}}</span></p>
+                {% endfor %}
+              
+            <h3 class="price">Total is {{price}} rupees</h3>
+            <h3 class="offerPrice">The total amount payable is {{total}} rupees</h3>
+
+            <button type="submit" class="btn btn-primary">proceed</button>
+
               </form>             
             </div>
-    
         </div>
     </div>
 </body>

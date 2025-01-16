@@ -6,6 +6,8 @@ import os
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
+import math,random
+
 
 # Create your views here.
 
@@ -31,6 +33,50 @@ def gro_login(req):
                         return redirect(gro_login)
         else:
                 return render(req,'login.html')
+
+def OTP(req):
+    digits = "0123456789"
+    OTP = ""
+    for i in range(6) :
+        OTP += digits[math.floor(random.random() * 10)]
+    return OTP
+
+def register(req):
+    if req.method=='POST':
+        email=req.POST['email']
+        name=req.POST['uname']
+        password=req.POST['password']
+        otp=OTP(req)
+        if User.objects.filter(email=email).exists():
+            messages.error(req, "Email is already in use.")
+            return redirect(register)
+        else:
+            send_mail('Your registration OTP ,',f"OTP for registration is {otp}", settings.EMAIL_HOST_USER, [email])
+            messages.success(req, "Registration successful. Please check your email for OTP.")
+            return redirect("validate",name=name,password=password,email=email,otp=otp)
+        # try:
+        #     data=User.objects.create_user(first_name=uname,email=email,username=email,password=password)
+        #     data.save()
+        #     return redirect(gro_login)
+        # except:
+        #     messages.warning(req,'Email Already Exists!!')
+        #     return redirect(register)
+    else:
+        return render(req,'register.html')
+
+def validate(req,name,password,email,otp):
+    if req.method=='POST':
+        uotp=req.POST['uotp']
+        if uotp==otp:
+            data=User.objects.create_user(first_name=name,email=email,password=password,username=email)
+            data.save()
+            messages.success(req, "OTP verified successfully. You can now log in.")
+            return redirect(gro_login)
+        else:
+            messages.error(req, "Invalid OTP. Please try again.")
+            return redirect("validate",name=name,password=password,email=email,otp=otp)
+    else:
+        return render(req,'validate.html',{'name':name,'pass':password,'email':email,'otp':otp})
 
 def gro_logout(req):
     logout(req)
@@ -156,21 +202,6 @@ def bookings(req):
 
 
 # ------------------------------------------------user------------------------------------------------------------
-
-def register(req):
-    if req.method=='POST':
-        email=req.POST['email']
-        uname=req.POST['uname']
-        password=req.POST['password']
-        try:
-            data=User.objects.create_user(first_name=uname,email=email,username=email,password=password)
-            data.save()
-            return redirect(gro_login)
-        except:
-            messages.warning(req,'Email Already Exists!!')
-            return redirect(register)
-    else:
-        return render(req,'user/register.html')
         
 def user_home(req):
     if 'user' in req.session:
@@ -178,20 +209,29 @@ def user_home(req):
         data=Details.objects.all()
         data1=Category.objects.all()
         return render(req,'user/user.html',{'products':product,'data':data,'data1':data1})
+    else:
+         return redirect(gro_login)
     
 def view_cat(req,id):
-    category = Category.objects.get(pk=id)
-    details = Details.objects.filter(product__category=category)
-    return render(req,'user/view_cat.html', {'category': category,'details': details})
+    if 'user' in req.session:
+        category = Category.objects.get(pk=id)
+        details = Details.objects.filter(product__category=category)
+        return render(req,'user/view_cat.html', {'category': category,'details': details})
+    else:
+         return redirect(gro_login)
     
 def view_pro(req,pid):
-    data=Product.objects.get(pk=pid)
-    data1=Details.objects.filter(product=pid)
-    data2=Details.objects.get(product=pid,pk=data1[0].pk)
-    if req.GET.get('dis'):
-            dis=req.GET.get('dis')
-            data2=Details.objects.get(product=pid,pk=dis)
-    return render(req,'user/view_product.html',{'data':data,'data1':data1,'data2':data2})
+    if 'user' in req.session:
+        data=Product.objects.get(pk=pid)
+        data1=Details.objects.filter(product=pid)
+        data2=Details.objects.get(product=pid,pk=data1[0].pk)
+        cat=Category.objects.all()
+        if req.GET.get('dis'):
+                dis=req.GET.get('dis')
+                data2=Details.objects.get(product=pid,pk=dis)
+        return render(req,'user/view_product.html',{'data':data,'data1':data1,'data2':data2,'cat':cat})
+    else:
+         return redirect(gro_login)
 
 def add_to_cart(req,id):
     details = Details.objects.get(pk=id)
@@ -199,17 +239,26 @@ def add_to_cart(req,id):
     try:
         cart = Cart.objects.get(details=details, user=user)
         cart.quantity += 1
+        cart.price=cart.details.off_price*cart.quantity
         cart.save()
     except:
-        data = Cart.objects.create(details=details, user=user, quantity=1)
+        price=details.off_price
+        data = Cart.objects.create(details=details, user=user, quantity=1,price=price)
         data.save()
     return redirect(view_cart)
 
 def view_cart(req):
-    user = User.objects.get(username=req.session['user'])
-    data = Cart.objects.filter(user=user)
-    return render(req, 'user/cart.html', {'cart': data})
-
+    if 'user' in req.session:
+        user = User.objects.get(username=req.session['user'])
+        data = Cart.objects.filter(user=user)
+        total=0
+        for i in data:
+            total+=i.price
+        cat=Category.objects.all()
+        return render(req, 'user/cart.html', {'cart': data,'cat':cat,'total':total})
+    else:
+         return redirect(gro_login)
+    
 def remove_item(req,id):
     data=Cart.objects.get(pk=id)
     data.delete()
@@ -264,7 +313,8 @@ def orderSummary(req,prod,data):
             address=req.POST['address']
             addr=Address.objects.get(user=user,pk=address)
         else:
-            return render(req,'user/order.html',{'prod':prod,'data':data})
+            cat=Category.objects.all()
+            return render(req,'user/order.html',{'prod':prod,'data':data,'cat':cat})
         print(prod.pk)
         addr=addr.pk
         return redirect("payment",pid=prod.pk,address=addr)   
@@ -277,7 +327,8 @@ def payment(req,pid,address):
         data=Details.objects.get(pk=pid)
         price=data.off_price
         addr=Address.objects.get(pk=address)
-        return render(req,'user/payment.html',{'price':price,'data':data,'address':addr})
+        cat=Category.objects.all()
+        return render(req,'user/payment.html',{'price':price,'data':data,'address':addr,'cat':cat})
     else:
         return redirect(gro_login) 
 
@@ -288,12 +339,12 @@ def address(req):
         if req.method=='POST':
             user=User.objects.get(username=req.session['user'])
             name=req.POST['name']
-            phn=req.POST['phn']
-            house=req.POST['house']
+            phn=req.POST['phone']
+            house=req.POST['address']
             street=req.POST['street']
             pin=req.POST['pin']
             state=req.POST['state']
-            data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
+            data=Address.objects.create(user=user,name=name,phone=phn,address=house,street=street,pincode=pin,state=state)
             data.save()
             return redirect(address)
         else:
@@ -301,18 +352,30 @@ def address(req):
     else:
         return redirect(gro_login) 
     
+def delete_address(req,pid):
+    if 'user' in req.session:
+        data=Address.objects.get(pk=pid)
+        data.delete()
+        return redirect(address)
+    else:
+        return redirect(gro_login)
+    
 
-def carbuy(req,cid):
+def carbuy(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
-        cart=Cart.objects.get(pk=cid)
-        # price=0
-        # for i in cart:
-        #      price+=(i.details.off_price)*i.quantity
+        cart=Cart.objects.filter(user=user)
+        price=0
+        total=0
+        for i in cart:
+            price+=(i.details.price)*i.quantity
+            price=price
+            total+=(i.details.off_price)*i.quantity
+            total=total
         data=Address.objects.filter(user=user)
         if data:
             # return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
-            return redirect("orderSummary2",cart=cart)
+            return redirect("orderSummary2",price=price,total=total)
         else:
             if req.method=='POST':
                 user=User.objects.get(username=req.session['user'])
@@ -324,26 +387,52 @@ def carbuy(req,cid):
                 state=req.POST['state']
                 data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
                 data.save()
-                return redirect("orderSummary2",cart=cart)
+                return redirect("orderSummary2",price=price,total=total)
             else:
                 return render(req,"user/address.html")
     else:
         return redirect(gro_login) 
     
-def orderSummary2(req,cart):
+def orderSummary2(req,price,total):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
-        carts=Cart.objects.get(pk=cart)
+        carts=Cart.objects.filter(user=user)
         if req.method == 'POST':
             address=req.POST['address']
             addr=Address.objects.get(user=user,pk=address)
         else:
-            return render(req,'user/cartorder.html',{'data2':carts,'data':data})
+            return render(req,'user/cartorder.html',{'data2':carts,'data':data,'price':price,'total':total})
         addr=addr.pk
         return redirect("payment2",address=addr)    
     else:
         return redirect(gro_login)
+
+def payment2(req,address):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.filter(user=user)
+        cat=Category.objects.all()
+        price=0
+        for i in cart:
+            price+=(i.details.price)*i.quantity
+        total=price
+        address=Address.objects.get(pk=address)
+        return render(req,'user/payment2.html',{'price':total,'address':address,'cat':cat})
+    else:
+        return redirect(gro_login) 
+def book2(req,address):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.filter(user=user)
+        for i in cart:
+            data=Buy.objects.create(user=i.user,details=i.details,quantity=i.quantity,tot_price=i.price,address=Address.objects.get(pk=address))
+            data.save()
+        cart.delete()
+        return redirect(user_bookings)
+    else:
+        return redirect(gro_login)
+    
 
 # def address(req,pid):
 #      if 'user' in req.session:
@@ -383,15 +472,18 @@ def orderSummary2(req,cart):
 
 
 def buy_product(req,pid,address):
-    prod=Details.objects.get(pk=pid)
-    user=User.objects.get(username=req.session['user'])
-    quantity=1
-    price=prod.off_price
-    buy=Buy.objects.create(details=prod,user=user,quantity=quantity,tot_price=price,address=Address.objects.get(pk=address))
-    buy.save()
-    prod.stock-=1
-    prod.save()
-    return redirect(user_bookings)
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=pid)
+        user=User.objects.get(username=req.session['user'])
+        quantity=1
+        price=prod.off_price
+        buy=Buy.objects.create(details=prod,user=user,quantity=quantity,tot_price=price,address=Address.objects.get(pk=address))
+        buy.save()
+        prod.stock-=1
+        prod.save()
+        return redirect(user_bookings)
+    else:
+         return redirect(gro_login)
 
 # def cart_buy(req,cid):
 #     cart=Cart.objects.get(pk=cid)
@@ -408,9 +500,20 @@ def buy_product(req,pid,address):
 
 
 def user_bookings(req):
-    user=User.objects.get(username=req.session['user'])
-    bookings=Buy.objects.filter(user=user)[::-1]
-    return render(req,'user/user_bookings.html',{'bookings':bookings})
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        bookings=Buy.objects.filter(user=user)[::-1]
+        return render(req,'user/user_bookings.html',{'bookings':bookings})
+    else:
+         return redirect(gro_login)
+
+def deleteBookings(req,pid):
+    if 'user' in req.session:
+        data=Buy.objects.get(pk=pid)
+        data.delete()
+        return redirect(user_bookings)
+    else:
+        return redirect(gro_login)
 
 def bookings(req):
     bookings=Buy.objects.all()[::-1]

@@ -10,6 +10,36 @@
     <title>Address Form</title>
 </head>
 <body>
+    <nav class="navbar fixed-top  ">
+        <div class="logo"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-list">
+            <li><a href="../user_home">Home</a></li>
+            <li>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-white text-dark     btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for i in cat %}
+                        <li><a class="dropdown-item " href="view_cat/{{i.pk }}">{{i.category}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            <!-- <li><a href="../address">Add Address</a></li> -->
+            <li><a href="../cart">Cart</a></li>
+            <li><a href="../user_book">Order Placed</a></li>
+            <li><a href="../logout">Logout</a></li>
+
+
+        </ul>
+    </nav>
+
     <div class="container">
         <h1>Address Form</h1>
         <form action="" method="post" enctype="multipart/form-data">
@@ -45,16 +75,16 @@
             <button type="submit" >Submit</button>
         </form>
     </div>
-    <div class="col-lg-5">
+    <div class="col-lg-4" style="text-align: center;">
         {% for i in data %}
         <div class="card">
           <div class="card-body">
               <h4 class="card-title"> NAME : {{i.name}}</h4>
-              <h5 class="card-text"> HOUSE/BIULDING : {{i.house}}</h5>
+              <h5 class="card-text">PHONE : {{i.phone}}</h5>
+              <h5 class="card-text"> HOUSE/BIULDING : {{i.address}}</h5>
               <h5 class="card-text">STREET : {{i.street}}</h5>
-              <h5 class="card-text">PIN : {{i.pin}}</h5>
+              <h5 class="card-text">PIN : {{i.pincode}}</h5>
               <h5 class="card-text">STATE : {{i.state}}</h5>
-              <h5 class="card-text">PHONE : {{i.phn}}</h5>
               <a href="delete_address/{{i.pk}}" class="btn btn-danger">Delete</a>
           </div>
         </div>

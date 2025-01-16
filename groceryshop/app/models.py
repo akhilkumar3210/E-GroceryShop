@@ -25,6 +25,7 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     details = models.ForeignKey(Details, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    price=models.FloatField()
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
