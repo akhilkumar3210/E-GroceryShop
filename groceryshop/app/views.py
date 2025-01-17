@@ -253,7 +253,7 @@ def view_cart(req):
         data = Cart.objects.filter(user=user)
         total=0
         for i in data:
-            total+=i.price
+            total+=i.price*i.quantity
         cat=Category.objects.all()
         return render(req, 'user/cart.html', {'cart': data,'cat':cat,'total':total})
     else:
@@ -380,12 +380,12 @@ def carbuy(req):
             if req.method=='POST':
                 user=User.objects.get(username=req.session['user'])
                 name=req.POST['name']
-                phn=req.POST['phn']
-                house=req.POST['house']
+                phn=req.POST['phone']
+                house=req.POST['address']
                 street=req.POST['street']
                 pin=req.POST['pin']
                 state=req.POST['state']
-                data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
+                data=Address.objects.create(user=user,name=name,phone=phn,address=house,street=street,pincode=pin,state=state)
                 data.save()
                 return redirect("orderSummary2",price=price,total=total)
             else:
@@ -402,7 +402,8 @@ def orderSummary2(req,price,total):
             address=req.POST['address']
             addr=Address.objects.get(user=user,pk=address)
         else:
-            return render(req,'user/cartorder.html',{'data2':carts,'data':data,'price':price,'total':total})
+            cat=Category.objects.all()
+            return render(req,'user/cartorder.html',{'data2':carts,'data':data,'price':price,'total':total,'cat':cat})
         addr=addr.pk
         return redirect("payment2",address=addr)    
     else:
@@ -415,7 +416,7 @@ def payment2(req,address):
         cat=Category.objects.all()
         price=0
         for i in cart:
-            price+=(i.details.price)*i.quantity
+            price+=(i.details.off_price)*i.quantity
         total=price
         address=Address.objects.get(pk=address)
         return render(req,'user/payment2.html',{'price':total,'address':address,'cat':cat})

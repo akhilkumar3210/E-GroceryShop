@@ -138,12 +138,10 @@ body {
 .title{
     text-align: center;
     margin-top: 10vh;
-    color: #ffffff;
+    color: #000000;
 }
 
-u{
-    color: #ffffff;
-}
+
 
 .product-card {
     background: white;
