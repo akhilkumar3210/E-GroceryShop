@@ -87,6 +87,12 @@
                   {% endfor %}
                 </select>
                 <a href="../../../address">Add new address + </a><br><br>
+                <div>
+                    <label for="onlinepayment">PaymentGatewate</label>
+                    <input type="radio" name="onlinepayment" id="">
+                    <label for="cashondelivery">CashOnDelivery COD </label>
+                    <input type="radio" name="onlinepayment" id="">
+                </div><br><br>
                 <h3 class="product-name">{{prod.product.name}}</h3>
                 <p class="product-description">{{prod.product.descri}}</p>
                 <p class="product-category">Category: {{prod.product.category.category}}</p>
