@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 import math,random
+import razorpay
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -242,8 +246,7 @@ def add_to_cart(req,id):
         cart.price=cart.details.off_price*cart.quantity
         cart.save()
     except:
-        price=details.off_price
-        data = Cart.objects.create(details=details, user=user, quantity=1,price=price)
+        data = Cart.objects.create(details=details, user=user, quantity=cart.quantity,price=cart.price)
         data.save()
     return redirect(view_cart)
 
@@ -311,26 +314,94 @@ def orderSummary(req,prod,data):
         data=Address.objects.filter(user=user)
         if req.method == 'POST':
             address=req.POST['address']
+            pay=req.POST['pay']
             addr=Address.objects.get(user=user,pk=address)
+            print(pay)
         else:
             cat=Category.objects.all()
             return render(req,'user/order.html',{'prod':prod,'data':data,'cat':cat})
         print(prod.pk)
         addr=addr.pk
-        return redirect("payment",pid=prod.pk,address=addr)   
+        if pay == 'paynow':
+            return redirect("payment",pid=prod.pk,address=addr)    
+        else:
+            return redirect("buy_pro",pid=prod.pk,address=addr)  
     else:
         return redirect(gro_login)
 
-def payment(req,pid,address):
+# def payment(req,pid,address):
+#     if 'user' in req.session:
+#         # user=User.objects.get(username=req.session['user'])
+#         data=Details.objects.get(pk=pid)
+#         price=data.off_price
+#         addr=Address.objects.get(pk=address)
+#         cat=Category.objects.all()
+#         return render(req,'user/payment.html',{'price':price,'data':data,'address':addr,'cat':cat})
+#     else:
+#         return redirect(gro_login) 
+
+    
+def order_payment(req,pid,address):
     if 'user' in req.session:
-        # user=User.objects.get(username=req.session['user'])
+        user = User.objects.get(username=req.session['user'])
+        name = user.first_name
         data=Details.objects.get(pk=pid)
-        price=data.off_price
-        addr=Address.objects.get(pk=address)
-        cat=Category.objects.all()
-        return render(req,'user/payment.html',{'price':price,'data':data,'address':addr,'cat':cat})
+        amount = data.off_price
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        razorpay_order = client.order.create(
+            {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
+        )
+        order_id=razorpay_order['id']
+        order = Order.objects.create(
+            name=name, amount=amount, provider_order_id=order_id
+        )
+        order.save()
+        return render(
+            req,
+            "user/payment.html",
+            {
+                "callback_url": "http://" + "127.0.0.1:8000" + "razorpay/callback",
+                "razorpay_key": settings.RAZORPAY_KEY_ID,
+                "order": order,
+            },
+        )
     else:
-        return redirect(gro_login) 
+        return render(gro_login)
+
+@csrf_exempt
+def callback(request):
+    def verify_signature(response_data):
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        return client.utility.verify_payment_signature(response_data)
+
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.signature_id = signature_id
+        order.save()
+        if not verify_signature(request.POST):
+            order.status = PaymentStatus.SUCCESS
+            order.save()
+            return render(request, "callback.html", context={"status": order.status})  
+        else:
+            order.status = PaymentStatus.FAILURE
+            order.save()
+            return render(request, "callback.html", context={"status": order.status}) 
+
+    else:
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.status = PaymentStatus.FAILURE
+        order.save()
+        return render(request, "callback.html", context={"status": order.status})  
+
 
 def address(req):
     if 'user' in req.session:
@@ -370,11 +441,10 @@ def carbuy(req):
         for i in cart:
             price+=(i.details.price)*i.quantity
             price=price
-            total+=(i.details.off_price)*i.quantity
+            total+=(i.details.off_price)*i.quantity# return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
             total=total
         data=Address.objects.filter(user=user)
         if data:
-            # return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
             return redirect("orderSummary2",price=price,total=total)
         else:
             if req.method=='POST':
@@ -397,7 +467,7 @@ def orderSummary2(req,price,total):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
-        carts=Cart.objects.filter(user=user)
+        carts=Cart.objects.filter(user=user)# return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
         if req.method == 'POST':
             address=req.POST['address']
             addr=Address.objects.get(user=user,pk=address)

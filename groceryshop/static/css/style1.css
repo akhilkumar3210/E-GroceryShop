@@ -11,13 +11,19 @@ body {
     margin: 0;
 }
 
+.logo-img {
+    width: 100%; /* Make logo responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
 .main {
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     padding: 10px 20px;
     transition: transform 0.2s;
-    width: 500px;
+    width: 100%; /* Set width to 100% for responsiveness */
+    max-width: 500px; /* Set a maximum width */
     text-align: center;
 }
 
@@ -62,4 +68,39 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .main {
+        padding: 20px; /* Increase padding for better touch targets */
+    }
+
+    button {
+        padding: 12px; /* Adjust button padding for smaller screens */
+        font-size: 14px; /* Slightly smaller font size */
+    }
+
+    input {
+        padding: 8px; /* Adjust input padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 15px; /* Adjust padding */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Adjust heading size */
+    }
+
+    button {
+        padding: 10px; /* Further adjust button padding */
+        font-size: 14px; /* Keep font size smaller */
+    }
+
+    input {
+        padding: 6px; /* Adjust input padding */
+    }
 }

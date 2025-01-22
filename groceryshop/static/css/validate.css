@@ -10,8 +10,8 @@ body {
 }
 
 .container {
-    max-width: 400px;
-    margin: 300px auto;
+    max-width: 400px; /* Maximum width for larger screens */
+    margin: 300px auto; /* Center the container */
     padding: 20px;
     background: white;
     border-radius: 8px;
@@ -47,16 +47,35 @@ button:hover {
     background-color: #218838;
 }
 
-@media (max-width: 600px) {
+/* Responsive Styles */
+@media (max-width: 768px) {
     .container {
-        padding: 15px;
+        margin: 150px auto; /* Reduce margin for smaller screens */
+        padding: 15px; /* Adjust padding */
     }
 
     h2 {
-        font-size: 24px;
+        font-size: 1.5em; /* Adjust heading size */
     }
 
     input[type="text"], button {
-        font-size: 14px;
+        font-size: 14px; /* Slightly smaller font size */
+        padding: 8px; /* Adjust padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 100px auto; /* Further reduce margin for very small screens */
+        padding: 10px; /* Adjust padding */
+    }
+
+    h2 {
+        font-size: 1.2em; /* Further adjust heading size */
+    }
+
+    input[type="text"], button {
+        font-size: 14px; /* Keep font size smaller */
+        padding: 6px; /* Further adjust padding */
     }
 }

@@ -132,3 +132,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ak2072719@gmail.com'
 EMAIL_HOST_PASSWORD = 'xrvg vnwc ozyd szsk'
+
+
+RAZORPAY_KEY_ID = 'rzp_test_fe3BVGHCwX1syl'
+RAZORPAY_KEY_SECRET = 'VZ3IyGsdccLD1WfJDdDqLNXc'

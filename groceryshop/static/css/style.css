@@ -4,13 +4,18 @@ body {
 }
 
 .container {
-    max-width: 400px;
-    margin: 150px auto;
-    padding: 50px;
+    max-width: 400px; /* Maximum width for larger screens */
+    margin: 150px auto; /* Center the container */
+    padding: 50px; /* Padding for the container */
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-img {
+    width: 100%; /* Make logo responsive */
+    height: auto; /* Maintain aspect ratio */
 }
 
 .login-box {
@@ -70,26 +75,48 @@ button[type="submit"]:hover {
 }
 
 /* Responsive Design */
-
 @media (max-width: 768px) {
     .container {
-        margin: 20px auto;
+        margin: 50px auto; /* Reduce margin for smaller screens */
+        padding: 30px; /* Adjust padding */
+    }
+
+    .input-group input {
+        height: 35px; /* Adjust input height */
+        padding: 8px; /* Adjust input padding */
+    }
+
+    button[type="submit"] {
+        height: 35px; /* Adjust button height */
+        padding: 8px; /* Adjust button padding */
+    }
+
+    .login-box p {
+        margin-top: 50px; /* Adjust paragraph margin */
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        margin: 10px auto;
-        padding: 10px;
+        margin: 20px auto; /* Further reduce margin for very small screens */
+        padding: 20px; /* Adjust padding */
     }
-    .login-box h2 {
-        margin-bottom: 10px;
+
+    .input-group input {
+        height: 30px; /* Adjust input height */
+        padding: 6px; /* Adjust input padding */
     }
-    .input-group {
-        margin-bottom: 10px;
-    }
+
     button[type="submit"] {
-        height: 30px;
-        padding: 5px;
+        height: 30px; /* Adjust button height */
+        padding: 6px; /* Adjust button padding */
+    }
+
+    .login-box h2 {
+        font-size: 1.5em; /* Adjust heading size */
+    }
+
+    .login-box p {
+        margin-top: 30px; /* Adjust paragraph margin */
     }
 }
