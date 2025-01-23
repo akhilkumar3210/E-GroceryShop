@@ -41,7 +41,7 @@
 
         </ul>
     </nav>
-    <div class="container">
+    <!-- <div class="container">
         <h1>payment </h1>
         <h3 class="offerPrice">{{price}}</h3>
         <h3>Shipping Address : </h3>
@@ -52,7 +52,41 @@
         <h4>{{address.pin}}</h4>
         <h4>{{address.phn}}</h4>
         <a class="btn btn-primary" href="../book2/{{address.pk}}">CONFIRM PAYMENT</a>
-    </div>
+    </div> -->
+
+    {% block content %}
+    <form method="POST">
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+      <script>
+      var options = {
+          key: "{{razorpay_key}}",
+          amount: "{{order.amount}}",
+          currency: "INR",
+          name: "{{order.name}}",
+          description: "Test Transaction",
+          image: "https://example.com/your_logo",
+          order_id: "{{order.provider_order_id}}",
+          callback_url: "{{callback_url}}",
+          redirect: true,
+          prefill: {
+              "name": "Gaurav Kumar",
+              "email": "gaurav.kumar@example.com",
+              "contact": "9999999999"
+          },
+          notes: {
+              "address": "Razorpay Corporate Office"
+          },
+          theme: {
+              "color": "#3399cc"
+          }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+      </script>
+      <input type="hidden" custom="Hidden Element" name="hidden">
+  </form>
+  {% endblock %}
+
 </body>
 
 </html>

@@ -55,10 +55,6 @@
     </div> -->
 
     {% block content %}
-  <div class="pay">
-    <h3>Payment gateway</h3>
-    <h3 class="offerPrice">{{price}}</h3>
-    <a class="btn" href="../../book/{{data.pk}}/{{address.pk}}">CONFIRM PAYMENT</a>
     <form method="POST">
       <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       <script>
