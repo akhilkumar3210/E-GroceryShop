@@ -166,7 +166,7 @@ def edit_product(req,id):
             Product.objects.filter(pk=id).update(pid=pid,name=name,descri=descri)
         return redirect(shop_home)
     else:
-        data=Product.objects.get(pk=id)
+        data=Product.objects.get(pk=id)      
         return render(req,'shop/edit.html',{'data':data})
     
 def editdetails(req,pid):
@@ -322,11 +322,12 @@ def orderSummary(req,prod,data):
             cat=Category.objects.all()
             return render(req,'user/order.html',{'prod':prod,'data':data,'cat':cat})
         print(prod.pk)
-        addr=addr.pk
+        req.session['address']=addr.pk
+        req.session['detail']=prod.pk
         if pay == 'paynow':
-            return redirect("payment",pid=prod.pk,address=addr)    
+            return redirect("payment")    
         else:
-            return redirect("buy_pro",pid=prod.pk,address=addr)  
+            return redirect("buy_pro")  
     else:
         return redirect(gro_login)
 
@@ -342,11 +343,11 @@ def orderSummary(req,prod,data):
 #         return redirect(gro_login) 
 
     
-def order_payment(req,pid,address):
+def order_payment(req):
     if 'user' in req.session:
         user = User.objects.get(username=req.session['user'])
         name = user.first_name
-        data=Details.objects.get(pk=pid)
+        data=Details.objects.get(pk=req.session['detail'])
         amount = data.off_price
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         razorpay_order = client.order.create(
@@ -361,7 +362,7 @@ def order_payment(req,pid,address):
             req,
             "user/payment.html",
             {
-                "callback_url": "http://" + "127.0.0.1:8000" + "razorpay/callback",
+                "callback_url": "http://127.0.0.1:8000/callback",
                 "razorpay_key": settings.RAZORPAY_KEY_ID,
                 "order": order,
             },
@@ -370,38 +371,39 @@ def order_payment(req,pid,address):
         return render(gro_login)
 
 @csrf_exempt
-# def callback(request):
-#     def verify_signature(response_data):
-#         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-#         return client.utility.verify_payment_signature(response_data)
+def callback(request):
+    def verify_signature(response_data):
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        return client.utility.verify_payment_signature(response_data)
 
-#     if "razorpay_signature" in request.POST:
-#         payment_id = request.POST.get("razorpay_payment_id", "")
-#         provider_order_id = request.POST.get("razorpay_order_id", "")
-#         signature_id = request.POST.get("razorpay_signature", "")
-#         order = Order.objects.get(provider_order_id=provider_order_id)
-#         order.payment_id = payment_id
-#         order.signature_id = signature_id
-#         order.save()
-#         if not verify_signature(request.POST):
-#             order.status = PaymentStatus.SUCCESS
-#             order.save()
-#             return render(request, "callback.html", context={"status": order.status})  
-#         else:
-#             order.status = PaymentStatus.FAILURE
-#             order.save()
-#             return render(request, "callback.html", context={"status": order.status}) 
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.signature_id = signature_id
+        order.save()
+        if not verify_signature(request.POST):
+            order.status = PaymentStatus.SUCCESS
+            order.save()
+            return render(request, "callback.html", context={"status": order.status})  
+ 
+        else:
+            order.status = PaymentStatus.FAILURE
+            order.save()
+            return redirect("buy_pro")
 
-#     else:
-#         payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
-#         provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
-#             "order_id"
-#         )
-#         order = Order.objects.get(provider_order_id=provider_order_id)
-#         order.payment_id = payment_id
-#         order.status = PaymentStatus.FAILURE
-#         order.save()
-#         return render(request, "callback.html", context={"status": order.status})  
+    else:
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.status = PaymentStatus.FAILURE
+        order.save()
+        return render(request, "callback.html", context={"status": order.status})  
 
 
 def address(req):
@@ -476,7 +478,8 @@ def orderSummary2(req,price,total):
         else:
             cat=Category.objects.all()
             return render(req,'user/cartorder.html',{'data2':carts,'data':data,'price':price,'total':total,'cat':cat})
-        addr=addr.pk
+        req.session['address']=addr.pk
+        # req.session['detail']=carts.pk
         if pay1 == 'paynow':
             return redirect("payment2",address=addr)    
         else:
@@ -509,7 +512,7 @@ def payment2(req,address):
             req,
             "user/payment2.html",
             {
-                "callback_url": "http://" + "127.0.0.1:8000" + "razorpay/callback",
+                "callback_url": "http://127.0.0.1:8000/callback2",
                 "razorpay_key": settings.RAZORPAY_KEY_ID,
                 "order": order,
             },
@@ -532,7 +535,7 @@ def payment2(req,address):
 #         return render(gro_login)
 
 @csrf_exempt
-def callback(request):
+def callback2(request):
     def verify_signature(response_data):
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         return client.utility.verify_payment_signature(response_data)
@@ -552,7 +555,7 @@ def callback(request):
         else:
             order.status = PaymentStatus.FAILURE
             order.save()
-            return render(request, "callback.html", context={"status": order.status}) 
+            return redirect("book2")
 
     else:
         payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
@@ -565,14 +568,14 @@ def callback(request):
         order.save()
         return render(request, "callback.html", context={"status": order.status})  
 
-def book2(req,address):
+def book2(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         cart=Cart.objects.filter(user=user)
         price=0
         for i in cart:
             price=i.price*i.quantity
-            data=Buy.objects.create(user=i.user,details=i.details,quantity=i.quantity,tot_price=price,address=Address.objects.get(pk=address))
+            data=Buy.objects.create(user=i.user,details=i.details,quantity=i.quantity,tot_price=price,address=Address.objects.get(pk=req.session['address']))
             data.save()
         cart.delete()
         return redirect(user_bookings)
@@ -617,13 +620,13 @@ def book2(req,address):
 #         return redirect(gro_login)
 
 
-def buy_product(req,pid,address):
+def buy_product(req):
     if 'user' in req.session:
-        prod=Details.objects.get(pk=pid)
+        prod=Details.objects.get(pk=req.session['detail'])
         user=User.objects.get(username=req.session['user'])
         quantity=1
         price=prod.off_price
-        buy=Buy.objects.create(details=prod,user=user,quantity=quantity,tot_price=price,address=Address.objects.get(pk=address))
+        buy=Buy.objects.create(details=prod,user=user,quantity=quantity,tot_price=price,address=Address.objects.get(pk=req.session['address']))
         buy.save()
         prod.stock-=1
         prod.save()
