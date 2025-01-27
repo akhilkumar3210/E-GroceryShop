@@ -481,13 +481,13 @@ def orderSummary2(req,price,total):
         req.session['address']=addr.pk
         # req.session['detail']=carts.pk
         if pay1 == 'paynow':
-            return redirect("payment2",address=addr)    
+            return redirect("payment2")    
         else:
-            return redirect("book2",address=addr)    
+            return redirect("book2")    
     else:
         return redirect(gro_login)
 
-def payment2(req,address):
+def payment2(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         cart=Cart.objects.filter(user=user)

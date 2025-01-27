@@ -37,7 +37,7 @@ urlpatterns=[
     path('order_payment',views.order_payment,name="payment"),
     path('address',views.address),
     path('buycart',views.carbuy),
-    path('payment2/<address>',views.payment2,name="payment2"),
+    path('payment2',views.payment2,name="payment2"),
     # path('order_payment/<address>',views.order_payment2,name="payment2"),
     path('book2',views.book2,name="book2"),
     # path('address',views.address),

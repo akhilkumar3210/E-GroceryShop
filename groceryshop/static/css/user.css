@@ -10,6 +10,7 @@
 
 body {
     font-family: Arial, sans-serif;
+    padding-top: 100px;
 }
 
 .navbar {
@@ -18,14 +19,11 @@ body {
     align-items: center;
     background-color: #ffffff;
     padding: 10px 20px;
-    position: fixed; /* Fixes the navbar at the top */
-    width: 100%;
-    z-index: 1000; /* Ensures the navbar is above other content */
 }
 
-.logo img {
-    width: 300px; /* Logo width */
-    height: 50px; /* Logo height */
+.logo {
+    color: rgb(0, 0, 0); /* Changed to black for visibility */
+    font-size: 24px;
 }
 
 .nav-list {
@@ -37,8 +35,17 @@ body {
     margin: 0 15px;
 }
 
-.dropdown {
-    margin-top: -7.5px;
+
+
+.dropdown-menu{
+    border: none;
+}
+
+.navbar-nav{
+  font-family: "Lexend Giga", serif;
+  font-optical-sizing: auto;
+  font-weight:600;
+  font-style: normal;
 }
 
 .nav-list a {
@@ -48,20 +55,20 @@ body {
     position: relative;
 }
 
-.navbar a::after {
+.navbar-nav a::after {
     content: '';
     display: block;
     width: 100%;
     height: 3px;
     background: rgb(0, 0, 0);
-    position: absolute;
+    position: relative;
     left: 0;
     bottom: -5px; /* Adjusts the position of the underline */
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
 
-.navbar a:hover::after {
+.navbar-nav a:hover::after {
     transform: scaleX(1);
 }
 
@@ -70,7 +77,7 @@ body {
 }
 
 .menu-toggle {
-    display: none; /* Hidden by default */
+    display: none;
 }
 
 .menu-icon {
@@ -133,18 +140,6 @@ body {
     .menu-icon {
         margin-right: 10px; /* Add some margin to the right of the menu icon */
     }
-
-    .dropdown-menu {
-        position: absolute; /* Position dropdown menu absolutely */
-        top: 100%; /* Position below the button */
-        left: 0; /* Align to the left */
-        width: 100%; /* Full width */
-        display: none; /* Hide dropdown by default */
-    }
-
-    .dropdown:hover .dropdown-menu {
-        display: block; /* Show dropdown on hover */
-    }
 }
 
 /* Optional: Style for the active state of the menu toggle */
@@ -158,39 +153,4 @@ body {
 
 .menu-toggle.active .bar:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg); /* Rotate the third bar */
-}
-
-.menu-toggle {
-    display: none; /* Hidden by default, shown on smaller screens */
-    flex-direction: column; /* Stack bars vertically */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    padding: 10px; /* Add some padding around the toggle */
-}
-
-.bar {
-    height: 3px; /* Height of each bar */
-    width: 30px; /* Width of each bar */
-    background-color: rgb(0, 0, 0); /* Color of the bars */
-    margin: 4px 0; /* Space between bars */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: flex; /* Show the menu toggle button on smaller screens */
-    }
-}
-
-/* Optional: Style for the active state of the menu toggle */
-.menu-toggle.active .bar:nth-child(2) {
-    opacity: 0; /* Hide the middle bar */
-}
-
-.menu-toggle.active .bar:nth-child(1) {
-    transform: translateY(7px) rotate(45deg); /* Rotate the first bar */
-}
-
-.menu-toggle.active .bar:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg); /* Rotate the third bar */
-}
+} 
