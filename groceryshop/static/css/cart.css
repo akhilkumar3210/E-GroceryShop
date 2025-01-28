@@ -163,6 +163,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+.col-lg-6{
+    width: 50% !important;
+}
+
 .cart-item {
     display: flex;
     align-items: center;

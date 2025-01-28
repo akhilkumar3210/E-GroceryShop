@@ -33,8 +33,8 @@ def gro_login(req):
                                 req.session['user']=uname   
                                 return redirect(user_home)
                 else:
-                        messages.warning(req,'Invaild username or password!!!')
-                        return redirect(gro_login)
+                    messages.warning(req,'Invaild username or password!!!')
+                    return redirect(gro_login)
         else:
                 return render(req,'login.html')
 
@@ -583,25 +583,25 @@ def book2(req):
         return redirect(gro_login)
     
 
-# def address(req,pid):
-#      if 'user' in req.session:
-#         detail=Details.objects.get(pk=pid)
-#         user=User.objects.get(username=req.session['user'])
-#         data=Address.objects.filter(user=user)
-#         if req.method=='POST':
-#             user=User.objects.get(username=req.session['user'])
-#             name=req.POST['name']
-#             address=req.POST['address']
-#             street=req.POST['street']
-#             city=req.POST['city']
-#             state=req.POST['state']
-#             pin=req.POST['pin']
-#             phone=req.POST['phone']
-#             data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
-#             data.save()
-#             return redirect('order',detail=detail.pk,data=data)
-#         else:
-#             return render(req,'user/address.html')
+def address(req,pid):
+     if 'user' in req.session:
+        detail=Details.objects.get(pk=pid)
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method=='POST':
+            user=User.objects.get(username=req.session['user'])
+            name=req.POST['name']
+            address=req.POST['address']
+            street=req.POST['street']
+            city=req.POST['city']
+            state=req.POST['state']
+            pin=req.POST['pin']
+            phone=req.POST['phone']
+            data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
+            data.save()
+            return redirect('order',detail=detail.pk,data=data)
+        else:
+            return render(req,'user/address.html')
 
 # def order(req,detail):
 #     if 'user' in req.session:

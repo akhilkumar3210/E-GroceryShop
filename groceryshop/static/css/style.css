@@ -1,9 +1,11 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    width: 100%;
+    height: 500% !important;
+    backdrop-filter: 20px;
+   
 }
 
-.container {
+.containerr {
     max-width: 400px; /* Maximum width for larger screens */
     margin: 150px auto; /* Center the container */
     padding: 50px; /* Padding for the container */
@@ -16,6 +18,13 @@ body {
 .logo-img {
     width: 100%; /* Make logo responsive */
     height: auto; /* Maintain aspect ratio */
+}
+.msg{
+    text-align: center;
+    width: 20%;
+    margin: auto;
+    margin-top: -110px;
+
 }
 
 .login-box {
@@ -76,7 +85,7 @@ button[type="submit"]:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .container {
+    .containerr {
         margin: 50px auto; /* Reduce margin for smaller screens */
         padding: 30px; /* Adjust padding */
     }
@@ -96,8 +105,8 @@ button[type="submit"]:hover {
     }
 }
 
-@media (max-width: 480px) {
-    .container {
+@media (max-width: 400px) {
+    .containerr {
         margin: 20px auto; /* Further reduce margin for very small screens */
         padding: 20px; /* Adjust padding */
     }
@@ -118,5 +127,9 @@ button[type="submit"]:hover {
 
     .login-box p {
         margin-top: 30px; /* Adjust paragraph margin */
+    }
+    .msg{
+        margin-top: 500px;
+    
     }
 }

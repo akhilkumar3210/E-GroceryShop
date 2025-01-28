@@ -40,7 +40,7 @@ urlpatterns=[
     path('payment2',views.payment2,name="payment2"),
     # path('order_payment/<address>',views.order_payment2,name="payment2"),
     path('book2',views.book2,name="book2"),
-    # path('address',views.address),
+    path('address',views.address),
     path('callback',views.callback,name="callback"),
     path('callback2',views.callback2,name="callback2"),
     path('buy_pro',views.buy_product,name='buy_pro'),

@@ -134,5 +134,5 @@ EMAIL_HOST_USER = 'ak2072719@gmail.com'
 EMAIL_HOST_PASSWORD = 'xrvg vnwc ozyd szsk'
 
 
-RAZORPAY_KEY_ID = 'rzp_test_fe3BVGHCwX1syl'
-RAZORPAY_KEY_SECRET = 'VZ3IyGsdccLD1WfJDdDqLNXc'
+RAZORPAY_KEY_ID = 'rzp_test_eCvhfa2LUuP1iw'
+RAZORPAY_KEY_SECRET = 'jryPOjKJjd6x8UamSBk2Lp1g'

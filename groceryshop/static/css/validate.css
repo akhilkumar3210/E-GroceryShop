@@ -3,13 +3,13 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+    height: 70vh;
 }
 
-.container {
+html{
+    backdrop-filter: 20px;
+}
+.containerr {
     max-width: 400px; /* Maximum width for larger screens */
     margin: 300px auto; /* Center the container */
     padding: 20px;
@@ -49,7 +49,7 @@ button:hover {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .container {
+    .containerr {
         margin: 150px auto; /* Reduce margin for smaller screens */
         padding: 15px; /* Adjust padding */
     }
@@ -65,7 +65,7 @@ button:hover {
 }
 
 @media (max-width: 480px) {
-    .container {
+    .containerr {
         margin: 100px auto; /* Further reduce margin for very small screens */
         padding: 10px; /* Adjust padding */
     }
