@@ -11,7 +11,40 @@
     <title>Document</title>
 </head>
 
-<body style="background-image: url(static/img/grogo.jpeg);">
+<body style="background-image: url(../static/img/grogo.jpeg);">
+
+    <!-- <nav class="  navbar navbar-expand-sm bg-white navbar-white fixed-top ">
+        <div class="container-fluid">
+          <a class="navbar-brand"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link  active text-dark" href="shop_home">Home</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link text-dark " href="addproduct">Add Product</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="details">Add Details</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="categoryyy">Add Categories</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="bookings">Order Placed</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="logout">Logout</a>
+              </li>      
+            </ul>
+          </div>
+        </div>
+      </nav> 
+     -->
+
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -30,7 +63,7 @@
             <div class="form-group">
                 <label for="productCategory">Product Category:</label>
                 <select id="" name="p_categories">
-                    <option value="{{data.category.category}}">{{i.category.category}}</option>
+                    <option value="{{data.category.category}}">{{data.category.category}}</option>
                 </select>
             </div>
             <div class="form-group">
