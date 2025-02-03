@@ -130,9 +130,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ak2072719@gmail.com'
-EMAIL_HOST_PASSWORD = 'xrvg vnwc ozyd szsk'
+EMAIL_HOST_USER = 'grocerygogro@gmail.com'
+EMAIL_HOST_PASSWORD = 'viyr nmjq vbco rgdv'
 
 
-RAZORPAY_KEY_ID = 'rzp_test_eCvhfa2LUuP1iw'
-RAZORPAY_KEY_SECRET = 'jryPOjKJjd6x8UamSBk2Lp1g'
+RAZORPAY_KEY_ID = 'rzp_test_vKJbhfSXBNrCFf'
+RAZORPAY_KEY_SECRET = 'kT96Sfb8LJ4lsSagnc2SqTh6'
