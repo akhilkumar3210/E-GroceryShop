@@ -144,7 +144,7 @@
         {% for i in products %}
                 <div class="col-lg-4 mb-5">
                     <a href="viewpro/{{i.pk}}" style="text-decoration: none; color: black;" >
-                    <div class="card" style="width:400px">
+                    <div class="card" style="width:100%">
                         <img class="card-img-top" src="{{i.img.url}}" alt="Card image">
                         <div class="card-body">
                             <h4 class="card-title">{{i.name}}</h4>
@@ -171,7 +171,7 @@
           <img src="{% static 'img/logo-png.png' %}" alt="">
         </div>
         <div class="footer-links">
-            <h4>Navigation</h4>
+            <h4 class="tit">Navigation</h4>
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Our Work</a></li>
@@ -181,7 +181,7 @@
             </ul>
         </div>
         <div class="footer-social">
-            <h4>Follow Us</h4>
+            <h4 class="tit">Follow Us</h4>
             <ul>
                 <li><i class="fa-brands fa-instagram" style="color: rgb(107, 7, 7); font-size: 20px; "></i></li>
                 <li><i class="fa-brands fa-facebook" style="color: blue; font-size: 20px;"></i></li>
@@ -190,7 +190,7 @@
             </ul>
         </div>
     </div>
-    <p>© 2025 My Website. All rights reserved.</p>
+    <p class="my">© 2025 My Website. All rights reserved.</p>
         
   </footer>
 
