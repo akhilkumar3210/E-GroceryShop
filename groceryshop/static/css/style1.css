@@ -70,6 +70,12 @@ button {
     align-items: center;
 }
 
+.valid li{
+    padding-top: 1vh;
+    font-size: 0.8rem;
+    text-align: start;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .main {

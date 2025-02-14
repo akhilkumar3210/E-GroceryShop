@@ -167,7 +167,7 @@ body {
     }
 
     .image-user {
-        padding-top: 20px;
+        margin-top: -5vh;
         width: 100%;
         object-fit: cover;
         padding-bottom: 3vh;

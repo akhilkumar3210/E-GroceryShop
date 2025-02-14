@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
 urlpatterns=[
-    path('',views.gro_login),
+    path('',views.front),
+    path('login',views.gro_login),
     path('validate/<name>/<password>/<email>/<otp>',views.validate,name="validate"),
     path('logout',views.gro_logout),
     # ----------------------------------------------admin-----------------------------------------------------------------------

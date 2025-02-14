@@ -15,7 +15,7 @@
         <img src="{% static 'img/logo-png.png' %}" alt="" class="logo-img" >
         <h1>Register To Grocery Go</h1>
 
-        <form action="" method="post">
+        <form action="" method="post" id="form">
             {% csrf_token %}
             <label for="first">
                 Username:
@@ -29,15 +29,24 @@
                 <label for="password">
                     Password:
                 </label>
-            <input type="password" id="" name="password" 
+            <input type="password" id="pw" name="password" 
                 placeholder="Enter your Password" required>
+                <div>
+                    <ul class="valid">
+                        <li id="len">Min 8 letter</li>
+                        <li id="cap">Cap letter</li>
+                        <li id="sml">Sml letter</li>
+                        <li id="no">Number</li>
+                        <li id="spl_chr">Spl chr</li>
+                        
+                </ul>
+                </div>
 
             <div class="wrap">
                 <button type="submit">
                     Register
                 </button>
             </div>
-
         </form>
         
     </div>
@@ -51,6 +60,44 @@
         {% endfor %}
         {% endif %}
     </div>
+
+
+    <script>
+
+        let passwd = document.getElementById("pw")
+        let len = document.getElementById("len")
+        let cap = document.getElementById("cap")
+        let sml = document.getElementById("sml")
+        let dig = document.getElementById("no")
+        let char = document.getElementById("spl_chr")
+
+        passwd.addEventListener('input', function () {
+            const password = passwd.value
+            len.style.color = password.length >= 8 ? 'green' : 'red'
+            cap.style.color = /[A-Z]/.test(password) ? 'green' : 'red'
+            sml.style.color = /[a-z]/.test(password) ? 'green' : 'red'
+            dig.style.color = /\d/.test(password) ? 'green' : 'red'
+            char.style.color = /[!@#$%&*]/.test(password) ? 'green' : 'red'
+        })
+        document.getElementById("form").addEventListener('submit', function (event) {
+            event.preventDefault();  
+            let pwd = passwd.value;
+            let messageContainer = document.createElement('div');
+            messageContainer.classList.add('alert', 'alert-warning', 'alert-dismissible', 'fade', 'show');
+
+            if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,}$/.test(pwd)) {
+                this.submit(); 
+            } else {
+                messageContainer.innerHTML = 'Please ensure your password meets all the criteria.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                let passwordField = document.getElementById("pw");
+                passwordField.parentNode.appendChild(messageContainer);
+                messageContainer.classList.add('alert', 'alert-dismissible', 'fade', 'show');
+                messageContainer.style.backgroundColor = '#7e0e463b';
+                messageContainer.style.color = '#7e0e46';
+                messageContainer.innerHTML = 'Please ensure your password meets all the criteria.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+            }
+        });
+    </script>
 </body>
 
 </html>

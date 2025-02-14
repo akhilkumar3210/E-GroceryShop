@@ -15,6 +15,26 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
+def front(req):
+    if 'user' in req.session:
+        return redirect(user_home)
+    else:
+        product=Product.objects.all()
+        data=Details.objects.all()
+        data1=Category.objects.all()
+        return render(req,'home.html',{'products':product,'data':data,'data1':data1})
+    
+# def front(req):
+#     if 'shop' in req.session:
+#         return redirect(shop_home)
+#     else:
+#         product=Product.objects.all()
+#         data=Details.objects.all()
+#         data1=Category.objects.all()
+#         return render(req,'home.html',{'products':product,'data':data,'data1':data1})
+
+
+
 def gro_login(req):
         if 'shop' in req.session:
                 return redirect(shop_home)
