@@ -134,5 +134,5 @@ EMAIL_HOST_USER = 'grocerygogro@gmail.com'
 EMAIL_HOST_PASSWORD = 'viyr nmjq vbco rgdv'
 
 
-RAZORPAY_KEY_ID = 'rzp_test_vKJbhfSXBNrCFf'
-RAZORPAY_KEY_SECRET = 'kT96Sfb8LJ4lsSagnc2SqTh6'
+RAZORPAY_KEY_ID = 'rzp_test_kms6yEaxjLxUAs'
+RAZORPAY_KEY_SECRET = 'IcAonGYD93kwRF4nLuf5FlUT'

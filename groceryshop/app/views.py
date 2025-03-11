@@ -381,7 +381,6 @@ def order_payment(req):
         )
     else:
         return render(gro_login)
-
 @csrf_exempt
 def callback(request):
     def verify_signature(response_data):
@@ -404,7 +403,8 @@ def callback(request):
         else:
             order.status = PaymentStatus.FAILURE
             order.save()
-            return redirect("buy_pro")
+            
+        return redirect("buy_pro")
 
     else:
         payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
@@ -416,7 +416,7 @@ def callback(request):
         order.status = PaymentStatus.FAILURE
         order.save()
         return render(request, "callback.html", context={"status": order.status})  
-
+    
 
 def address(req):
     if 'user' in req.session:

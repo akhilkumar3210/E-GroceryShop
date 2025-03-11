@@ -148,6 +148,11 @@ body {
     background-color: #f4f4f4;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -155,13 +160,11 @@ body {
     padding: 20px;
 }
 
-.title{
+.title {
     text-align: center;
     margin-top: 10vh;
     color: #000000;
 }
-
-
 
 .product-card {
     background: white;
@@ -170,7 +173,7 @@ body {
     margin: 15px;
     padding: 20px;
     text-align: center;
-    width: 200px; /* Fixed width for cards */
+    width: 300px;
     transition: transform 0.2s;
 }
 
@@ -196,10 +199,9 @@ body {
 
 @media (max-width: 600px) {
     .product-card {
-        width: 90%; /* Full width on small screens */
+        width: 90%;
     }
 }
-
 
 .footer {
     background-color: #fdfcfc;

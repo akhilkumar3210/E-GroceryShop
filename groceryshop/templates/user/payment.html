@@ -11,48 +11,8 @@
     <title>Document</title>
 </head>
 
-<body style="background-image: url(../../static/img/grogo.jpeg); backdrop-filter: blur(10px);">
-    <!-- <nav class="navbar fixed-top  ">
-        <div class="logo"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <ul class="nav-list">
-            <li><a href="../../user_home">Home</a></li>
-            <li>
-                <div class="dropdown">
-                    <button type="button" class="btn btn-white text-dark     btt-1 dropdown-toggle" data-bs-toggle="dropdown">
-                        Categories
-                    </button>
-                    <ul class="dropdown-menu">
-                        {% for i in cat %}
-                        <li><a class="dropdown-item " href="../../view_cat/{{i.pk }}">{{i.category}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </li> -->
-            <!-- <li><a href="../address">Add Address</a></li> -->
-            <!-- <li><a href="../../cart">Cart</a></li>
-            <li><a href="../../user_book">Order Placed</a></li>
-            <li><a href="../../logout">Logout</a></li>
+<body style="background-image: url(../../static/img/grogo.jpeg);">
 
-
-        </ul>
-    </nav> -->
-    <!-- <div class="container">
-        <h1>payment </h1>
-        <h3 class="offerPrice">{{price}}</h3>
-        <h3>Shipping Address : </h3>
-        <h4>{{address.name}}</h4>
-        <h4>{{address.house}}</h4>
-        <h4>{{address.street}}</h4>
-        <h4>{{address.state}}</h4>
-        <h4>{{address.pin}}</h4>
-        <h4>{{address.phn}}</h4>
-        <a class="btn btn-primary" href="../../buy_pro/{{data.pk}}/{{address.pk}}">CONFIRM PAYMENT</a>
-    </div> -->
 
     {% block content %}
     <form method="POST">
@@ -86,6 +46,7 @@
       <input type="hidden" custom="Hidden Element" name="hidden">
   </form>
   {% endblock %}
+
 </body>
 
 </html>

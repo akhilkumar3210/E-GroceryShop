@@ -85,25 +85,35 @@
 
         </ul>
     </nav> -->
-   <u> <h1 class="title" style="text-align: center;">Order Placed</h1></u>
-    {%  for i in bookings %}
-    <div class="container">
-        <div class="product-card col-md-4">
-            <img src="{{i.details.product.img.url}}" alt="Product Image" class="product-img">
-            <h2 class="product-name">{{i.details.product.name}}</h2>
-            <p class="product-qty">Quantity: <span>{{i.quantity}}</span></p>
-            <p class="product-price">Price: <span>{{i.tot_price}}</span></p>
-            <p class="product-date">Date: <span>{{i.date}}</span></p>
-
-            <h4>Customer Address</h4>
-            <h6>{{i.address.name}}</h6>
-            <h6>{{i.address.phone}}</h6>
-            <a href="deleteBookings/{{i.pk}}" class="btn btn-danger ">Delete</a>
-        </div>
-        <!-- Repeat the product card as needed -->
+    <u>
+      <h1 class="title" style="text-align: center;">Order Placed</h1>
+  </u>
+  
+  <div class="container">
+      {% for i in bookings %}
+      <div class="product-card">
+          <img src="{{ i.details.product.img.url }}" alt="Product Image" class="product-img">
+          <h2 class="product-name">{{ i.details.product.name }}</h2>
+          <p class="product-qty">Quantity: <span>{{ i.quantity }}</span></p>
+          <p class="product-price">Price: <span>{{ i.tot_price }}</span></p>
+          <p class="product-date">Date: <span>{{ i.date }}</span></p>
+  
+          <h4>Customer Address</h4>
+          <h6>{{ i.address.name }}</h6>
+          <h6>{{ i.address.phone }}</h6>
+          <a href="#" onclick="confirmCancel('{{ i.pk }}'); return false;" class="btn btn-danger">Cancel</a>
     </div>
     {% endfor %}
-    <!-- <a href="../shop_home"><button>back</button></a> -->
+</div>
+
+<script>
+function confirmCancel(bookingId) {
+    const confirmation = confirm("Are you sure you want to cancel this booking?");
+    if (confirmation) {
+        window.location.href = "deleteBookings/" + bookingId;
+    }
+}
+</script>
 
     <footer class="footer">
       <div class="footer-container">
