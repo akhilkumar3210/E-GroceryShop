@@ -223,7 +223,7 @@ def user_home(req):
         product=Product.objects.all()
         data=Details.objects.all()
         data1=Category.objects.all()
-        return render(req,'user/user.html',{'products':product,'data':data,'data1':data1})
+        return render(req,'user/user.html',{'products':product,'data':data,'cat':data1})
     else:
          return redirect(gro_login)
     

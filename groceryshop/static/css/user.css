@@ -21,17 +21,20 @@ body {
     align-items: center;
     background-color: #ffffff;
     padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
     color: rgb(0, 0, 0);
     font-size: 24px;
+    font-weight: bold;
 }
 
 .navbar-nav {
     font-family: "Lexend Giga", serif;
     font-weight: 600;
     font-style: normal;
+    text-transform: uppercase;
 }
 
 .nav-list {
@@ -43,6 +46,13 @@ body {
 .nav-list li {
     margin: 0 15px;
 }
+
+.navbar-nav .nav-link {
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
 
 .nav-list a {
     color: rgb(0, 0, 0);
@@ -68,11 +78,21 @@ body {
     transform: scaleX(1);
 }
 
-.nav-list a:hover {
-    background-color: #ffffff;
+.btt-1 {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
 }
 
-/* Menu Toggle for Mobile */
+.btt-1:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+
 .menu-toggle {
     display: none;
 }
@@ -90,7 +110,6 @@ body {
     margin: 3px 0;
 }
 
-/* Mobile Navigation Styling */
 @media (max-width: 768px) {
     .nav-list {
         display: none;
@@ -120,7 +139,6 @@ body {
     }
 }
 
-/* Responsive Layout for Smaller Screens */
 @media (max-width: 420px) {
     .navbar {
         padding: 10px 15px;
@@ -134,57 +152,20 @@ body {
         margin: 0 10px;
     }
 
-    body{
+    body {
         padding-top: 54%;
     }
 
     .footer {
         padding: 10px 0;
     }
-
-    .footer-container {
-        flex-direction: column;
-        align-items: center;
-        max-width: 100%;
-    }
-
-    .footer-logo img {
-        max-width: 250px;
-    }
-
-    .footer-links ul, .footer-social ul {
-        text-align: center;
-        margin-left: 30vw;
-        flex-direction: column;
-    }
-    .tit{
-        margin-left: 28vw;
-    }
-
-    .card-img-top {
-        width: 100%;
-        height: 50%;
-    }
-
-    .image-user {
-        margin-top: -5vh;
-        width: 100%;
-        object-fit: cover;
-        padding-bottom: 3vh;
-    }
-    .my{
-        text-align: center;
-        margin-left: 3vw;
-        margin-top: 3vh;
-    }
 }
 
-/* Footer Styling */
+
 .footer {
-    background-color: #fdfcfc;
-    color: rgb(0, 0, 0);
+    background-color: #f8f9fa;
+    padding: 40px 20px;
     text-align: center;
-    padding: 20px 0;
 }
 
 .footer-container {
@@ -192,50 +173,77 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 30px;
 }
 
 .footer-logo img {
     max-width: 300px;
-    margin-bottom: 20px;
+    height: auto;
 }
 
 .footer-links, .footer-social {
-    margin: 10px;
+    margin: 20px;
 }
 
 .footer-links h4, .footer-social h4 {
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
 .footer-links ul, .footer-social ul {
     list-style: none;
     padding: 0;
-    display: flex;
-    justify-content: space-around;
-    gap: 1vh;
 }
 
 .footer-links li, .footer-social li {
     margin: 5px 0;
 }
 
-.footer-links a, .footer-social a {
-    color: rgb(0, 0, 0);
+.footer-links a {
     text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
 }
 
-.footer-links a:hover, .footer-social a:hover {
-    text-decoration: underline;
+.footer-links a:hover {
+    color: #007bff;
 }
 
-.my{
-    text-align: center;
-    margin-left: 3vw;
-    margin-top: 3vh;
+.footer-social ul {
+    display: flex;
+    justify-content: center;
+    padding: 0;
 }
+
+.footer-social li {
+    margin: 0 10px;
+}
+
+.footer-social i {
+    color: #333;
+    transition: color 0.3s;
+}
+
+.footer-social i:hover {
+    color: #007bff;
+}
+
+.my {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-links, .footer-social {
+        text-align: center;
+    }
+}
+
 
 /* Card Styling */
 .card-img-top {
@@ -255,6 +263,5 @@ body {
 .image-user {
     width: 100%;
     object-fit: cover;
-    margin-top: -100px;
     margin-bottom: 5vh;
 }
