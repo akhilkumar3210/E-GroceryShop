@@ -212,9 +212,40 @@ def bookings(req):
     bookings=Buy.objects.all()[::-1]
     return render(req,'shop/bookings.html',{'bookings':bookings})
 
+def send_order_confirmation_email(customer_email, customer_name, product_name, quantity, price, date):
+    subject = 'Order Confirmation'
+    message = f'Hello {customer_name},\n\nThank you for your order!\n\nOrder Details:\nProduct: {product_name}\nQuantity: {quantity}\nPrice: {price}\nDate: {date}\n Kindley We Deliver short time \n Our Team Will Contact'
+    from_email = settings.DEFAULT_FROM_EMAIL
 
+    send_mail(subject, message, from_email, [customer_email])
 
+# def send_email_confirmation(req, booking_id):
+#     booking = Buy.objects.get(id=booking_id)  # Get the booking by ID
+#     send_order_confirmation_email(
+#         booking.user.email,  # Assuming the email is stored in the address field
+#         booking.address.name,    # Assuming the name is stored in the address field
+#         booking.details.product.name,  # Adjust according to your model structure
+#         booking.quantity,
+#         booking.tot_price,
+#         booking.date
+#     )
+#     return redirect(bookings)  # Redirect back to the bookings page
 
+def send_email_confirmation(req, booking_id):
+    if req.method == 'POST':
+        booking = Buy.objects.get(id=booking_id)  # Get the booking by ID
+        send_order_confirmation_email(
+            booking.user.email,
+            booking.address.name,
+            booking.details.product.name,
+            booking.quantity,
+            booking.tot_price,
+            booking.date
+        )
+        booking.email_confirmed = True  # Update the confirmation status
+        booking.save()  # Save the changes to the database
+        return redirect(bookings)  # Redirect to the bookings page
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
 
 # ------------------------------------------------user------------------------------------------------------------
         
@@ -682,3 +713,14 @@ def deleteBookings(req,pid):
 def bookings(req):
     bookings=Buy.objects.all()[::-1]
     return render(req,'shop/bookings.html',{'bookings':bookings})
+
+@csrf_exempt  # Use this only if you are not using CSRF tokens in your fetch request
+def cancel_order(request, booking_id):
+    if request.method == 'POST':
+        try:
+            booking = Buy.objects.get(id=booking_id)
+            booking.delete()  # Or mark as cancelled, depending on your logic
+            return JsonResponse({'status': 'success', 'message': 'Order cancelled successfully.'})
+        except Buy.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Order not found.'}, status=404)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)

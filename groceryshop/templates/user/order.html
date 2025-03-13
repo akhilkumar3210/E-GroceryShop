@@ -134,13 +134,19 @@
                   {% endfor %}
                 </select>
                 <a href="../../../address">Add new address + </a><br><br>
-                <div>
-                    <h3>Payment method :</h3><br>
-                    <label for="onlinepayment">PayNow</label>
-                    <input type="radio" name="pay" id="paynow" value="paynow" required>
-                    <label for="cashondelivery">CashOnDelivery</label>
-                    <input type="radio" name="pay" id="cod" value="cod" required>
-                </div><br><br>
+                <div class="payment-method">
+                  <h3>Payment Method:</h3>
+                  <label class="custom-checkbox">
+                      <input type="radio" name="pay" id="paynow" value="paynow" required>
+                      <span class="checkmark"></span>
+                      Pay Now
+                  </label>
+                  <label class="custom-checkbox">
+                      <input type="radio" name="pay" id="cod" value="cod" required>
+                      <span class="checkmark"></span>
+                      Cash On Delivery
+                  </label>
+              </div>
                 <h3 class="product-name">{{prod.product.name}}</h3>
                 <p class="product-description">{{prod.product.descri}}</p>
                 <p class="product-category">Category: {{prod.product.category.category}}</p>

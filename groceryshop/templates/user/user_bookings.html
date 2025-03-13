@@ -88,29 +88,61 @@
     
       <h1 class="title" style="text-align: center;">Order Placed</h1>
   
-  <div class="container">
-      {% for i in bookings %}
-      <div class="product-card">
-          <img src="{{ i.details.product.img.url }}" alt="Product Image" class="product-img">
-          <h2 class="product-name">{{ i.details.product.name }}</h2>
-          <p class="product-qty">Quantity: <span>{{ i.quantity }}</span></p>
-          <p class="product-price">Price: <span>{{ i.tot_price }}</span></p>
-          <p class="product-date">Date: <span>{{ i.date }}</span></p>
-  
-          <h4>Customer Address</h4>
-          <h6>{{ i.address.name }}</h6>
-          <h6>{{ i.address.phone }}</h6>
-          <a href="#" onclick="confirmCancel('{{ i.pk }}'); return false;" class="btn btn-danger">Cancel</a>
+      <div class="container">
+        {% for i in bookings %}
+        <div class="product-card">
+            <img src="{{ i.details.product.img.url }}" alt="Product Image" class="product-img">
+            <h2 class="product-name">{{ i.details.product.name }}</h2>
+            <p class="product-qty">Quantity: <span>{{ i.quantity }}</span></p>
+            <p class="product-price">Price: <span>{{ i.tot_price }}</span></p>
+            <p class="product-date">Date: <span>{{ i.date }}</span></p>
+    
+            <h4>Customer Address</h4>
+            <h6>{{ i.address.name }}</h6>
+            <h6>{{ i.address.phone }}</h6>
+    
+            <!-- Conditionally render the Cancel button -->
+            {% if not i.email_confirmed %}
+                <a href="#" id="cancel-btn-{{ i.pk }}" onclick="confirmCancel('{{ i.pk }}'); return false;" class="btn btn-danger">Cancel</a>
+            {% else %}
+                <p class="text-muted">Order confirmed. Cancellation not allowed.</p>
+            {% endif %}
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-
 <script>
+
 function confirmCancel(bookingId) {
-    const confirmation = confirm("Are you sure you want to cancel this booking?");
-    if (confirmation) {
-        window.location.href = "deleteBookings/" + bookingId;
-    }
+    // Disable the button immediately
+    const button = document.getElementById(`cancel-btn-${bookingId}`);
+    button.disabled = true;
+    button.textContent = "Cancelling..."; // Change button text to indicate the action
+
+    // Optionally, send a request to the server to cancel the order
+    fetch(`/cancel_order/${bookingId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}', // Include CSRF token for security
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({}) // You can send additional data if needed
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Order cancelled successfully:', data);
+        // Optionally, you can remove the product card or show a success message
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        // Re-enable the button if there was an error
+        button.disabled = false;
+        button.textContent = "Cancel"; // Reset button text
+    });
 }
 </script>
 

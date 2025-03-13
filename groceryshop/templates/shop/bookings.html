@@ -42,36 +42,71 @@
           </div>
         </div>
       </nav> 
-    <div class="container">
-        {%  for i in bookings %}
-        <h1>Order Placed</h1>
-        <div class="order-details">
-            <h2>Product Details</h2>
-            <div class="product">
-                <img src="{{i.details.product.img.url}}" alt="Product Image" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-name">{{i.details.product.name}}</h3>
-                    <p class="product-qty">Weight:<span>{{i.details.weight}}</span></p>
-                    <p class="product-qty">Quantity:<span>{{i.quantity}}</span></p>
-                    <p class="product-price">Price: <span>{{i.tot_price}}</span> </p>
-                    <p class="product-price">Date: <span>{{i.date}}</span> </p>
 
-                </div>
-            </div>
-        </div>
-        <div class="customer-info">
-            <h2>Customer Information</h2>
-            <p><strong>Name:</strong>{{i.address.name}}</p>
-            <p><strong>Phone:</strong>{{i.address.phone}}</p>
-            <p><strong>Address:</strong>{{i.address.address}}</p>
-            <p><strong>street:</strong>{{i.address.street}} </p>
-            <p><strong>City:</strong>{{i.address.city}} </p>
-            <p><strong>State:</strong>{{i.address.state}}</p>
-            <p><strong>PIN:</strong> {{i.address.pincode}}</p>
-        </div>
-    {% endfor %}
+      <div class="container">
+        <h1 class="title">ORDER PLACED</h1>
+        <div class="row">
+            {% for i in bookings %}
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="product">
+                            <img src="{{i.details.product.img.url}}" alt="Product Image" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-name">{{i.details.product.name}}</h3>
+                                <p class="product-qty">Weight: <span>{{i.details.weight}}</span></p>
+                                <p class="product-qty">Quantity: <span>{{i.quantity}}</span></p>
+                                <p class="product-price">Price: <span>{{i.tot_price}}</span></p>
+                                <p class="product-price">Date: <span>{{i.date}}</span></p>
+                            </div>
+                        </div>
+                        <div class="customer-info">
+                            <h2>Customer Information</h2>
+                            <p><strong>Name:</strong> {{i.address.name}}</p>
+                            <p><strong>Phone:</strong> {{i.address.phone}}</p>
+                            <p><strong>Email:</strong> {{i.user.email}}</p>
+                            
+                            <form action="{% url 'send_email_confirmation' i.id %}" method="post">
+                              {% csrf_token %}
+                              <button type="submit" class="show-more-btn">Send Email Confirmation</button>
+                          </form>
+                          
+                            <!-- Additional Customer Details Section -->
+                            <div class="additional-customer-details" style="display: none;">
+                                <p><strong>Address:</strong> {{i.address.address}}</p>
+                                <p><strong>Street:</strong> {{i.address.street}}</p>
+                                <p><strong>City:</strong> {{i.address.city}}</p>
+                                <p><strong>State:</strong> {{i.address.state}}</p>
+                                <p><strong>PIN:</strong> {{i.address.pincode}}</p>
+                            </div>
+                            
+                            <!-- Show More Button -->
+                            <button class="show-more-btn" onclick="toggleCustomerDetails(this)">Show More</button>
+                        </div>
+                    </div>
+                </div> <!-- End of column -->
+            {% endfor %}
+        </div> <!-- End of row -->
     </div>
 
+    <script>
+      function toggleCustomerDetails(button) {
+          const additionalDetails = button.previousElementSibling;
+          if (additionalDetails.style.display === "none" || additionalDetails.style.display === "") {
+              additionalDetails.style.display = "block"; // Show the additional details
+              button.textContent = "Show Less"; // Change button text
+          } else {
+              additionalDetails.style.display = "none"; // Hide the additional details
+              button.textContent = "Show More"; // Change button text back
+          }
+      }
+  
+      function sendEmail(email, name, productName, quantity, price, date) {
+          const subject = encodeURIComponent('Order Confirmation');
+          const body = encodeURIComponent(`Hello ${name},\n\nThank you for your order!\n\nOrder Details:\nProduct: ${productName}\nQuantity: ${quantity}\nPrice: ${price}\nDate: ${date}`);
+          const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+          window.location.href = mailtoLink; // Open the default email client
+      }
+  </script>
 
 
     <!-- <footer class="footer fixed-bottom">

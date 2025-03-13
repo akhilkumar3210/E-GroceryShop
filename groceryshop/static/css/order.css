@@ -152,6 +152,7 @@ body {
     border-radius: 8px;
     background-color: #f9f9f9;
     margin-top: 10vh;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
 }
 
 .product {
@@ -160,13 +161,64 @@ body {
     margin-bottom: 20px;
 }
 
-.select-box{
+.select-box {
     width: 95%;
+    padding: 10px; /* Added padding for better usability */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff; /* White background for select box */
 }
+
+.payment-method {
+    margin-bottom: 20px;
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333; /* Text color */
+}
+
+.custom-checkbox input {
+    display: none; /* Hide the default checkbox */
+}
+
+.checkmark {
+    width: 20px; /* Size of the custom checkbox */
+    height: 20px;
+    border: 2px solid #28a745; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    margin-right: 10px; /* Space between checkbox and label */
+    position: relative;
+    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+}
+
+.custom-checkbox input:checked + .checkmark {
+    background-color: #28a745; /* Background color when checked */
+    border-color: #28a745; /* Border color when checked */
+}
+
+.custom-checkbox input:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px; /* Position of the checkmark */
+    top: 2px; /* Position of the checkmark */
+    width: 5px; /* Width of the checkmark */
+    height: 10px; /* Height of the checkmark */
+    border: solid white; /* Checkmark color */
+    border-width: 0 2px 2px 0; /* Checkmark shape */
+    transform: rotate(45deg); /* Rotate to form a checkmark */
+}
+
 .product-img {
-    width: 550px;
+    width: 100%; /* Make image responsive */
+    max-width: 150px; /* Set a max width for larger screens */
     height: auto;
     margin-right: 20px;
+    border-radius: 5px; /* Rounded corners for images */
 }
 
 .product-details {
@@ -176,35 +228,30 @@ body {
 .product-name {
     font-size: 1.5em;
     margin: 0;
+    color: #333; /* Darker color for better readability */
 }
 
 .product-description {
     font-size: 1em;
-    color: #202020;
+    color: #555; /* Slightly lighter color for description */
 }
 
 .product-category {
     font-size: 0.9em;
-    color: #111111;
-}
-
-.product-price, .product-offprice {
-    font-size: 1.2em;
-    margin: 5px 0;
-}
-
-.product-category {
+    color: #777; /* Lighter color for category */
     font-weight: bold;
 }
 
 .product-price {
-    text-decoration: line-through;
-    color: #999;
+    font-size: 1.2em;
+    margin: 5px 0;
+    color: #999; /* Color for original price */
+    text-decoration: line-through; /* Strikethrough for original price */
 }
 
 .offer-price {
-    color: #e91e63;
-    font-size: 1.2em;
+    color: #e91e63; /* Bright color for offer price */
+    font-size: 1.5em; /* Slightly larger for emphasis */
     font-weight: bold;
 }
 
@@ -212,31 +259,41 @@ body {
     padding: 10px 20px;
     font-size: 1em;
     color: #fff;
-    background-color: #28a745;
+    background-color: #28a745; /* Green color for payment button */
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
 .payment-button:hover {
-    background-color: #218838;
+    background-color: #218838; /* Darker green on hover */
 }
 
 @media (max-width: 600px) {
     .order-summary {
-        padding: 10px;
+        padding: 10px; /* Reduced padding for smaller screens */
     }
 
     .product-img {
-        width: 80px;
+        width: 80px; /* Smaller image for mobile */
     }
 
     .product-name {
-        font-size: 1.2em;
+        font-size: 1.2em; /* Smaller font size for mobile */
     }
 
     .payment-button {
-        width: 100%;
+        width: 100%; /* Full width button on mobile */
+    }
+
+    .product {
+        flex-direction: column; /* Stack product details on mobile */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .product-img {
+        margin-bottom: 10px; /* Space between image and details */
     }
 }
 

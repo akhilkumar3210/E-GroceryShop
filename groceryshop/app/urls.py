@@ -18,6 +18,8 @@ urlpatterns=[
     path('delete_details/<pid>',views.deletedetails),
     path('viewpro/<pid>',views.view_pro),
     path('bookings',views.bookings),
+    path('send_email_confirmation/<booking_id>',views.send_email_confirmation, name='send_email_confirmation'),
+    #  path('place_order/',views.place_order, name='place_order'),
 
 
 
@@ -49,6 +51,7 @@ urlpatterns=[
     # path('cartbuy/<cid>',views.cart_buy),
     path('deleteBookings/<pid>',views.deleteBookings),
     path('delete_address/<pid>',views.delete_address),
+    path('cancel_order/<booking_id>',views. cancel_order, name='cancel_order'),
 
     
 

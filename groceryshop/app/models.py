@@ -47,6 +47,7 @@ class Buy(models.Model):
     quantity=models.IntegerField()
     tot_price=models.IntegerField()
     date=models.DateField(auto_now_add=True)
+    email_confirmed = models.BooleanField(default=False)
 
 
 class Order(models.Model):
