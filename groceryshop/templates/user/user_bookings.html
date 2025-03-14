@@ -29,7 +29,7 @@
                     <a class="nav-link active text-dark" href="../../user_home">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <button type="button" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" style="text-transform: uppercase;" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Categories
                     </button>
                     <ul class="dropdown-menu">
@@ -56,35 +56,7 @@
 </nav>
    
  
-    <!-- <nav class="navbar fixed-top  ">
-        <div class="logo"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <ul class="nav-list">
-            <li><a href="../../user_home">Home</a></li>
-            <li>
-                <div class="dropdown">
-                    <button type="button" class="btn btn-white text-dark     btt-1 dropdown-toggle" data-bs-toggle="dropdown">
-                        Categories
-                    </button>
-                    <ul class="dropdown-menu">
-                        {% for i in cat %}
-                        <li><a class="dropdown-item " href="../../view_cat/{{i.pk }}">{{i.category}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </li> -->
-            <!-- <li><a href="../address">Add Address</a></li> -->
-            <!-- <li><a href="../../cart">Cart</a></li>
-            <li><a href="../../user_book">Order Placed</a></li>
-            <li><a href="../../logout">Logout</a></li>
 
-
-        </ul>
-    </nav> -->
     
       <h1 class="title" style="text-align: center;">Order Placed</h1>
   
@@ -103,7 +75,7 @@
     
             <!-- Conditionally render the Cancel button -->
             {% if not i.email_confirmed %}
-                <a href="#" id="cancel-btn-{{ i.pk }}" onclick="confirmCancel('{{ i.pk }}'); return false;" class="btn btn-danger">Cancel</a>
+                <a href="deleteBookings/{{i.pk}}"  class="btn btn-danger">Cancel</a>
             {% else %}
                 <p class="text-muted">Order confirmed. Cancellation not allowed.</p>
             {% endif %}
@@ -112,38 +84,6 @@
     </div>
 <script>
 
-function confirmCancel(bookingId) {
-    // Disable the button immediately
-    const button = document.getElementById(`cancel-btn-${bookingId}`);
-    button.disabled = true;
-    button.textContent = "Cancelling..."; // Change button text to indicate the action
-
-    // Optionally, send a request to the server to cancel the order
-    fetch(`/cancel_order/${bookingId}/`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': '{{ csrf_token }}', // Include CSRF token for security
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({}) // You can send additional data if needed
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Order cancelled successfully:', data);
-        // Optionally, you can remove the product card or show a success message
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-        // Re-enable the button if there was an error
-        button.disabled = false;
-        button.textContent = "Cancel"; // Reset button text
-    });
-}
 </script>
 
     <footer class="footer">

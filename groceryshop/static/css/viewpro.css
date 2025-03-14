@@ -13,10 +13,12 @@ body {
     height: 100vh;
 }
 
-.dropdown{
-    margin-top: -5vh;
-    
+.navbar-nav .nav-link {
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
 }
+
 
 .navbar {
     display: flex;
@@ -45,6 +47,7 @@ body {
 
 .dropdown-menu{
     border: none;
+    text-transform: uppercase;
 }
 
 .navbar-nav{
@@ -203,22 +206,23 @@ body {
 }
 
 .product-price {
-    text-decoration: line-through;
+    font-size: 18px;
+    font-weight: bold;
     color: #333;
-    font-size: 1.2em;
-    margin-bottom: 5px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #888; /* Grey color for original price */
 }
 
 .offer-price {
-    color: #000000;
-    font-size: 1.5em;
+    font-size: 3vh;
     font-weight: bold;
-    margin-top: 5px;
+    color: #d9534f; /* Bootstrap's danger color for offer price */
+    margin-top: 5px; /* Add some space above the offer price */
 }
 
-.offer-price:hover {
-    color: #008a00;
-}
 
 .button-container {
     display: flex;

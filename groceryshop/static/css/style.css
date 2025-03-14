@@ -1,135 +1,180 @@
+/* General Reset and Box Model */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    width: 100%;
-    height: 500% !important;
-    backdrop-filter: 20px;
-   
-}
-
-.containerr {
-    max-width: 400px; /* Maximum width for larger screens */
-    margin: 150px auto; /* Center the container */
-    padding: 50px; /* Padding for the container */
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.logo-img {
-    width: 100%; /* Make logo responsive */
-    height: auto; /* Maintain aspect ratio */
-}
-.msg{
-    text-align: center;
-    width: 20%;
-    margin: auto;
-    margin-top: -110px;
-
-}
-
-.login-box {
-    text-align: center;
-}
-
-.login-box h2 {
-    margin-bottom: 20px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6e7a89, #a3b3c2); /* Gradient background */
     color: #333;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
 }
 
+/* Full-page container setup */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #6e7a89, #a3b3c2); /* Cool gradient background */
+    backdrop-filter: blur(5px); /* Subtle blur effect for the background */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Login Box Styling */
+.login-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px 30px;
+    width: 360px;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Logo Image Styling */
+.logo-img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Heading Styling */
+h3 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: slideIn 1s ease-out forwards;
+}
+
+/* Input Group Styling */
 .input-group {
     margin-bottom: 20px;
+    text-align: left;
 }
 
 .input-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
     display: block;
-    margin-bottom: 10px;
-    color: #666;
+    margin-bottom: 5px;
 }
 
 .input-group input {
     width: 100%;
-    height: 40px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    font-size: 16px;
+    background-color: #f4f6f9;
+    transition: all 0.3s ease;
 }
 
-button[type="submit"] {
-    width: 100%;
-    height: 40px;
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px;
+.input-group input:focus {
+    border-color: #3498db;
+    background-color: #fff;
+    outline: none;
+}
+
+/* Button Styling */
+button {
+    background-color: #1beb00; /* Initial color (Blue) */
+    color: white;
     border: none;
-    border-radius: 5px;
+    padding: 15px;
+    width: 100%;
+    font-size: 18px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3); /* Blue shadow for button */
+    position: relative;
+    z-index: 2;
 }
 
-button[type="submit"]:hover {
-    background-color: #3e8e41;
+button:hover {
+    background-color: #2ecc71; /* Green color on hover */
+    transform: translateY(-5px); /* Button slightly floats */
+    box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3); /* Green shadow on hover */
 }
 
-.login-box p {
-    margin-top: 100px;
-    color: #666;
+button:focus {
+    outline: none;
 }
 
-.login-box p a {
-    color: #4CAF50;
+/* Link Styling (For Register) */
+a {
+    color: #34db42;
     text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 0.5px;
 }
 
-.login-box p a:hover {
-    color: #3e8e41;
+a:hover {
+    text-decoration: underline;
+}
+
+/* Register Text Styling */
+p {
+    font-size: 16px;
+    color: #777;
+}
+
+/* Message Alerts */
+.alert {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff3cd;
+    color: #856404;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Adding Keyframes for animation */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .containerr {
-        margin: 50px auto; /* Reduce margin for smaller screens */
-        padding: 30px; /* Adjust padding */
+@media (max-width: 600px) {
+    .login-box {
+        width: 90%;
+        padding: 25px 20px;
+    }
+
+    h3 {
+        font-size: 24px;
     }
 
     .input-group input {
-        height: 35px; /* Adjust input height */
-        padding: 8px; /* Adjust input padding */
+        padding: 10px 16px;
     }
 
-    button[type="submit"] {
-        height: 35px; /* Adjust button height */
-        padding: 8px; /* Adjust button padding */
-    }
-
-    .login-box p {
-        margin-top: 50px; /* Adjust paragraph margin */
-    }
-}
-
-@media (max-width: 400px) {
-    .containerr {
-        margin: 20px auto; /* Further reduce margin for very small screens */
-        padding: 20px; /* Adjust padding */
-    }
-
-    .input-group input {
-        height: 30px; /* Adjust input height */
-        padding: 6px; /* Adjust input padding */
-    }
-
-    button[type="submit"] {
-        height: 30px; /* Adjust button height */
-        padding: 6px; /* Adjust button padding */
-    }
-
-    .login-box h2 {
-        font-size: 1.5em; /* Adjust heading size */
-    }
-
-    .login-box p {
-        margin-top: 30px; /* Adjust paragraph margin */
-    }
-    .msg{
-        margin-top: 500px;
-    
+    button {
+        padding: 12px;
+        font-size: 16px;
     }
 }

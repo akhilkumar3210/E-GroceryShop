@@ -133,11 +133,11 @@
                     <option value="{{i.pk}}">{{i.name}},{{i.phone}},{{i.address}},{{i.street}},{{i.pin}},{{i.state}}</option>
                   {% endfor %}
                 </select>
-                <a href="../../../address">Add new address + </a><br><br>
+                <a href="../../../address" >Add new address + </a><br><br>
                 <div class="payment-method">
                   <h3>Payment Method:</h3>
                   <label class="custom-checkbox">
-                      <input type="radio" name="pay" id="paynow" value="paynow" required>
+                      <input type="radio" name="pay" id="paynow" value="paynow" required checked>
                       <span class="checkmark"></span>
                       Pay Now
                   </label>
@@ -147,12 +147,17 @@
                       Cash On Delivery
                   </label>
               </div>
+              </div>
                 <h3 class="product-name">{{prod.product.name}}</h3>
                 <p class="product-description">{{prod.product.descri}}</p>
                 <p class="product-category">Category: {{prod.product.category.category}}</p>
-                <p class="product-price" >Price:<span class="original-price">₹{{prod.price}}</span></p>
-                <p class="offer-price">Offer Price: <span>₹{{prod.off_price}}</span></p>
-                <button type="submit" class="btn btn-primary">proceed</button>
+                <p class="product-price">
+                  Price: <span class="original-price">₹{{prod.price}}</span>
+              </p>
+              <p class="offer-price">
+                  <span>₹{{prod.off_price}}</span>
+              </p>
+                <button type="submit" class="btn btn-success">proceed</button>
               </form>             
             </div>
         </div>

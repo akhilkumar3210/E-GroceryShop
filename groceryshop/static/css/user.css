@@ -9,6 +9,71 @@
     box-sizing: border-box;
 }
 
+.catol {
+    margin-top: -3vh;
+    margin-bottom: 5vh;
+}
+
+.carousel-item {
+    position: relative;
+}
+
+.carousel-item img {
+    transition: transform 0.5s ease; /* Smooth zoom effect */
+    width: 100%; /* Ensure images are responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.carousel-item:hover img {
+    transform: scale(1.05); /* Zoom effect on hover */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for buttons */
+    border-radius: 50%; /* Round buttons */
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent indicators */
+}
+
+.carousel-indicators .active {
+    background-color: white; /* Active indicator color */
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .carousel-item img {
+        height: auto; /* Maintain aspect ratio */
+    }
+}
+
+@media (max-width: 900px) {
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 30px; /* Smaller control buttons */
+        height: 30px; /* Smaller control buttons */
+    }
+}
+
+@media (max-width: 600px) {
+    .catol {
+        margin-top: -16vh;
+        margin-bottom: 5vh;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 25px; /* Even smaller control buttons */
+        height: 25px; /* Even smaller control buttons */
+    }
+
+    .carousel-item img {
+        transform: scale(1); /* Disable zoom effect on mobile for better performance */
+    }
+}
+
+
 body {
     font-family: Arial, sans-serif;
     padding-top: 100px; /* Adjust padding to account for fixed navbar */
@@ -265,3 +330,4 @@ body {
     object-fit: cover;
     margin-bottom: 5vh;
 }
+

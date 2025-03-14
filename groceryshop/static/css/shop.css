@@ -161,6 +161,72 @@ body {
 } 
 
 
+/* General Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Weight Selector Styles */
+.weight-selector {
+    appearance: none; /* Remove default styling */
+    background-color: #f8f9fa; /* Light background */
+    border: 1px solid #ced4da; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding */
+    font-size: 16px; /* Font size */
+    color: #495057; /* Text color */
+    cursor: pointer; /* Pointer cursor */
+    transition: border-color 0.3s, background-color 0.3s; /* Transition effects */
+    width: 100%; /* Full width */
+}
+
+/* Custom Arrow for Dropdown */
+.weight-selector::after {
+    content: '▼'; /* Custom arrow */
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Prevent interaction */
+    color: #495057; /* Arrow color */
+}
+
+/* Hover and Focus Effects */
+.weight-selector:hover,
+.weight-selector:focus {
+    border-color: #007bff; /* Change border color on hover/focus */
+    background-color: #e9ecef; /* Change background color on hover/focus */
+}
+
+/* Stock and Price Info Styles */
+.stock-info, .original-price, .discounted-price {
+    margin-top: 10px; /* Spacing */
+    font-weight: bold; /* Bold text */
+}
+
+.original-price {
+    text-decoration: line-through; /* Strikethrough for original price */
+    color: #dc3545; /* Red color for original price */
+}
+
+.discounted-price {
+    color: #28a745; /* Green color for discounted price */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .weight-selector {
+        font-size: 14px; /* Smaller font size on mobile */
+    }
+}
+
 .container {
     max-width: 1000px;
     margin: 0 auto;

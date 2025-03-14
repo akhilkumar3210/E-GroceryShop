@@ -45,38 +45,91 @@
         </div>
       </nav> 
 
-    <div class="container">
+      <div class="container">
         <h1>Add Product</h1>
-        <form action="#" method="post" enctype="multipart/form-data">
+        <form id="productForm" action="#" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
             {% csrf_token %}
             <div class="form-group">
-                <label for="productName">Product ID:</label>
-                <input type="text" id="" name="p_id" required>
+                <label for="productID">Product ID:</label>
+                <input type="text" id="" name="p_id" placeholder="Enter Product ID">
             </div>
             <div class="form-group">
                 <label for="productName">Product Name:</label>
-                <input type="text" id="" name="name" required>
+                <input type="text" id="" name="name" placeholder="Enter Product Name">
             </div>
             <div class="form-group">
                 <label for="productDescription">Product Description:</label>
-                <input type="text" id="" name="description" required>
+                <input type="text" id="" name="description" placeholder="Enter Product Description">
             </div>
             <div class="form-group">
                 <label for="productCategory">Product Category:</label>
                 <select id="" name="p_categories">
-                {% for i in data %}
-                    <option value="{{i.category}}">{{i.category}}</option>
-                {% endfor %}
+                    {% for i in data %}
+                        <option value="{{i.category}}">{{i.category}}</option>
+                    {% endfor %}
                 </select>
-               
             </div>
             <div class="form-group">
                 <label for="productImage">Product Image:</label>
-                <input type="file" id="" name="p_img" accept="image/*" required>
+                <input type="file" id="" name="p_img" accept="image/*">
             </div>
             <button type="submit">Add Product</button>
         </form>
     </div>
+    
+    <script>
+    function validateForm() {
+        const productID = document.querySelector('input[name="p_id"]').value.trim();
+        const productName = document.querySelector('input[name="name"]').value.trim();
+        const productDescription = document.querySelector('input[name="description"]').value.trim();
+        const productCategory = document.querySelector('select[name="p_categories"]').value;
+        const productImage = document.querySelector('input[name="p_img"]').files.length;
+    
+        // Validate Product ID
+        const idPattern = /^[a-zA-Z0-9]+$/; // Alphanumeric characters only
+        if (!productID) {
+            alert('Product ID is required.');
+            return false;
+        } else if (!idPattern.test(productID)) {
+            alert('Product ID must be alphanumeric.');
+            return false;
+        }
+    
+        // Validate Product Name
+        const namePattern = /^[a-zA-Z\s]+$/; // Letters and spaces only
+        if (!productName) {
+            alert('Product Name is required.');
+            return false;
+        } else if (!namePattern.test(productName)) {
+            alert('Product Name can only contain letters and spaces.');
+            return false;
+        }
+    
+        // Validate Product Description
+        if (!productDescription) {
+            alert('Product Description is required.');
+            return false;
+        } else if (productDescription.length < 10) {
+            alert('Product Description must be at least 10 characters long.');
+            return false;
+        }
+    
+        // Validate Product Category
+        if (!productCategory) {
+            alert('Product Category is required.');
+            return false;
+        }
+    
+        // Validate Product Image
+        if (productImage === 0) {
+            alert('Product Image is required.');
+            return false;
+        }
+    
+        // If all validations pass
+        return true;
+    }
+    </script>
 
     <!-- <footer class="footer fixed-bottom">
         <div class="footer-container">

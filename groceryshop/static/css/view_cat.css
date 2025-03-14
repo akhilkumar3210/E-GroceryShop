@@ -38,8 +38,15 @@ body {
     margin: 0 15px;
 }
 
+.navbar-nav .nav-link {
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
 .dropdown-menu{
     border: none;
+    text-transform: uppercase;
 }
 
 .navbar-nav{
@@ -154,7 +161,7 @@ body {
     text-align: center;
     padding: 5px 0;
     width: 100% !important;
-    margin-top: 5vh;
+    margin-top: 12vh;
 }
 
 .image-user{

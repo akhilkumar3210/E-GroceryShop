@@ -714,13 +714,3 @@ def bookings(req):
     bookings=Buy.objects.all()[::-1]
     return render(req,'shop/bookings.html',{'bookings':bookings})
 
-@csrf_exempt  # Use this only if you are not using CSRF tokens in your fetch request
-def cancel_order(request, booking_id):
-    if request.method == 'POST':
-        try:
-            booking = Buy.objects.get(id=booking_id)
-            booking.delete()  # Or mark as cancelled, depending on your logic
-            return JsonResponse({'status': 'success', 'message': 'Order cancelled successfully.'})
-        except Buy.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Order not found.'}, status=404)
-    return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)

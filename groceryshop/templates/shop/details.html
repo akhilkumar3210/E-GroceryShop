@@ -46,37 +46,74 @@
         </div>
       </nav> 
 
-    <div class="container">
-        <form action="" method="post">
+      <div class="container">
+        <form id="productForm" action="" method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label for="product Id">Product Id:</label>
-                <select id="" name="p_id">
-                {% for i in data %}
-                    <option value="{{i.pid}}">{{i.pid}}</option>
-                {% endfor %}
+                <label for="productId">Product Id:</label>
+                <select id="productId" name="p_id" required>
+                    {% for i in data %}
+                        <option value="{{i.pid}}">{{i.name}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="form-group">
-                <label for="Product Weight">Product Weight:</label>
-                <input type="text" id="" name="p_weight" required>
+                <label for="productWeight">Product Weight:</label>
+                <input type="text" id="productWeight" name="p_weight"  placeholder="Enter product weight">
             </div>
             <div class="form-group">
                 <label for="productPrice">Product Price:</label>
-                <input type="number" id="" name="p_price" required>
+                <input type="number" id="productPrice" name="p_price"  placeholder="Enter product price">
             </div>
             <div class="form-group">
-                <label for="productPrice">Product Offer Price:</label>
-                <input type="number" id="" name="of_price" required>
+                <label for="offerPrice">Product Offer Price:</label>
+                <input type="number" id="offerPrice" name="of_price" placeholder="Enter offer price">
             </div>
             <div class="form-group">
                 <label for="productStock">Product Stock:</label>
-                <input type="number" id="" name="p_stock" required><br><br><br>
-                <button type="submit">Submit</button>
-            
+                <input type="number" id="productStock" name="p_stock" placeholder="Enter product stock"><br><br>
+            </div>
+            <button type="submit">Submit</button>
         </form>
     </div>
-
+    
+    <script>
+        document.getElementById('productForm').addEventListener('submit', function(event) {
+            // Get the values of the input fields
+            const weight = document.getElementById('productWeight').value;
+            const price = document.getElementById('productPrice').value;
+            const offerPrice = document.getElementById('offerPrice').value;
+            const stock = document.getElementById('productStock').value;
+    
+            // Validate weight (ensure it's a positive number)
+            // if (isNaN(weight) || weight <= 0) {
+            //     alert('Please enter a valid product weight.');
+            //     event.preventDefault(); // Prevent form submission
+            //     return;
+            // }
+    
+            // Validate price (ensure it's a positive number)
+            if (isNaN(price) || price <= 0) {
+                alert('Please enter a valid product price.');
+                event.preventDefault(); // Prevent form submission
+                return;
+            }
+    
+            // Validate offer price (ensure it's a positive number)
+            if (isNaN(offerPrice) || offerPrice < 0) {
+                alert('Please enter a valid offer price.');
+                event.preventDefault(); // Prevent form submission
+                return;
+            }
+    
+            // Validate stock (ensure it's a non-negative integer)
+            if (isNaN(stock) || stock < 0) {
+                alert('Please enter a valid product stock.');
+                event.preventDefault(); // Prevent form submission
+                return;
+            }
+        });
+    </script>
 
     <!-- <footer class="footer fixed-bottom">
         <div class="footer-container">

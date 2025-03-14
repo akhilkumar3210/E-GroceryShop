@@ -51,7 +51,7 @@ urlpatterns=[
     # path('cartbuy/<cid>',views.cart_buy),
     path('deleteBookings/<pid>',views.deleteBookings),
     path('delete_address/<pid>',views.delete_address),
-    path('cancel_order/<booking_id>',views. cancel_order, name='cancel_order'),
+    # path('cancel_order/<booking_id>',views. cancel_order, name='cancel_order'),
 
     
 

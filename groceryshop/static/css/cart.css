@@ -42,7 +42,15 @@ body {
 
 .dropdown-menu{
     border: none;
+    text-transform: uppercase;
 }
+
+.navbar-nav .nav-link {
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
 
 .navbar-nav{
   font-family: "Lexend Giga", serif;

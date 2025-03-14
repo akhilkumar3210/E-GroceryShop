@@ -31,7 +31,7 @@
           </li>
           <li>
             <div class="dropdown">
-              <button type="button" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+              <button type="button" style="text-transform: uppercase;"  class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
                 Categories
               </button>
               <ul class="dropdown-menu">
@@ -77,8 +77,12 @@
         <div class="label">{{j.weight}}</div>
       </label>
       {% endfor %}
-      <p class="product-price">Price: <span class="original-price">₹{{data2.price}}</span></p>
-      <p class="offer-price">Offer Price: <span>₹{{data2.off_price}}</span></p>
+      <p class="product-price">
+        Price: <span class="original-price">₹{{data2.price}}</span>
+    </p>
+    <p class="offer-price">
+        <span>₹{{data2.off_price}}</span>
+    </p>
       {% if data2.stock > 0 %}
       <div class="button-container">
         <a href="../add_to_cart/{{data2.pk}}"><button class="add-to-cart">Add to Cart</button></a>

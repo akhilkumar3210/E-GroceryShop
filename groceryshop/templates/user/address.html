@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Address Form</title>
 </head>
-<body style="background-image: url(static/img/grogo.jpeg); backdrop-filter: blur(10px);">
+<body style="background-image: url(../static/img/grogo.jpeg); backdrop-filter: blur(10px);">
     <nav class=" fixed-top navbar navbar-expand-sm bg-white navbar-white ">
         <div class="container-fluid">
           <a class="navbar-brand"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></a>
@@ -27,7 +27,7 @@
               </li>
               <li>
                 <div class="dropdown">
-                    <button type="button" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+                    <button type="button" style="text-transform: uppercase;" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
                         Categories
                     </button>
                     <ul class="dropdown-menu">
@@ -54,41 +54,115 @@
         </div>
       </nav> 
    
-    <div class="container">
+      <div class="container">
         <h1>Address Form</h1>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form id="addressForm" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" >
             </div>
             <div class="form-group">
-                <label for="zip">Phone Number:</label>
-                <input type="number" id="zip" name="phone" required  >
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" style="width: 100%;">
             </div>
             <div class="form-group">
                 <label for="address">Address:</label>
-                <input type="text" id="address" name="address" required>
+                <input type="text" id="address" name="address" >
             </div>
             <div class="form-group">
-                <label for="country">Street:</label>
-                <input type="text" id="country" name="street" required>
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="street">
             </div>
             <div class="form-group">
                 <label for="city">City:</label>
-                <input type="text" id="city" name="city" required>
+                <input type="text" id="city" name="city" >
             </div>
             <div class="form-group">
                 <label for="state">State:</label>
-                <input type="text" id="state" name="state" required>
+                <input type="text" id="state" name="state" >
             </div>
             <div class="form-group">
-                <label for="zip">Pin Code:</label>
-                <input type="number" id="zip" name="pin" required>
+                <label for="pin">Pin Code:</label>
+                <input type="text" id="pin" name="pin" >
             </div>
-            <button type="submit" >Submit</button>
+            <button type="submit">Submit</button>
         </form>
     </div>
+    
+    <script>
+        document.getElementById('addressForm').addEventListener('submit', function(event) {
+            // Prevent form submission
+            event.preventDefault();
+    
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const street = document.getElementById('street').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const state = document.getElementById('state').value.trim();
+            const pin = document.getElementById('pin').value.trim();
+    
+            // Validation flags
+            let isValid = true;
+            let errorMessage = '';
+    
+            // Validate Full Name
+            if (name === '') {
+                isValid = false;
+                errorMessage += 'Full Name is required.\n';
+            }
+    
+            // Validate Phone Number
+            const phonePattern = /^[0-9]{10}$/; // Adjust pattern as needed
+            if (!phonePattern.test(phone)) {
+                isValid = false;
+                errorMessage += 'Phone Number must be 10 digits.\n';
+            }
+    
+            // Validate Address
+            if (address === '') {
+                isValid = false;
+                errorMessage += 'Address is required.\n';
+            }
+    
+            // Validate Street
+            if (street === '') {
+                isValid = false;
+                errorMessage += 'Street is required.\n';
+            }
+    
+            // Validate City
+            if (city === '') {
+                isValid = false;
+                errorMessage += 'City is required.\n';
+            }
+    
+            // Validate State
+            if (state === '') {
+                isValid = false;
+                errorMessage += 'State is required.\n';
+            }
+    
+            // Validate Pin Code
+            const pinPattern = /^[0-9]{6}$/; // Adjust pattern as needed
+            if (!pinPattern.test(pin)) {
+                isValid = false;
+                errorMessage += 'Pin Code must be 6 digits.\n';
+            }
+    
+            // Show error messages or submit the form
+            if (!isValid) {
+                alert(errorMessage);
+            } else {
+                // If valid, submit the form
+                this.submit();
+            }
+        });
+    </script>
+
+
     <div class="col-lg-4" style="text-align: center;">
         {% for i in data %}
         <div class="card">

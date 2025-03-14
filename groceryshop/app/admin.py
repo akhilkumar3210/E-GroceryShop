@@ -6,5 +6,6 @@ admin.site.register(Product)
 admin.site.register(Details)
 admin.site.register(Address)
 admin.site.register(Order)
+admin.site.register(Buy)
 
 
