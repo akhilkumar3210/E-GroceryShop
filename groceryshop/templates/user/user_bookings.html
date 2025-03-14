@@ -75,9 +75,16 @@
     
             <!-- Conditionally render the Cancel button -->
             {% if not i.email_confirmed %}
-                <a href="deleteBookings/{{i.pk}}"  class="btn btn-danger">Cancel</a>
+            <a href="deleteBookings/{{i.pk}}" class="btn btn-danger" onclick="return confirmCancel();">Cancel</a>
+            
+            <script>
+                function confirmCancel() {
+                    return confirm("Are you sure you want to cancel this booking?");
+                }
+            </script>
+            
             {% else %}
-                <p class="text-muted">Order confirmed. Cancellation not allowed.</p>
+                <p class="text-muted " style="background-color: greenyellow; border-radius: 10px;" >Order confirmed. Cancellation not allowed.</p>
             {% endif %}
         </div>
         {% endfor %}

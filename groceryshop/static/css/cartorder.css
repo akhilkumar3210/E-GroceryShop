@@ -41,6 +41,8 @@ body {
 
 .dropdown-menu{
     border: none;
+    text-transform: uppercase; 
+
 }
 
 .navbar-nav{
@@ -48,6 +50,12 @@ body {
   font-optical-sizing: auto;
   font-weight:600;
   font-style: normal;
+}
+
+.navbar-nav .nav-link {
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
 }
 
 .nav-list a {
@@ -143,26 +151,110 @@ body {
         margin-right: 10px; /* Add some margin to the right of the menu icon */
     }
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
 .order-summary {
-    max-width: 620px;
+    max-width: 30%;
     margin: auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f9;
     margin-top: 10vh;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .product {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    flex-direction: column;
+}
+
+.select-box {
+    width: 150%; /* Adjusted to 100% for better responsiveness */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 20px; /* Added margin for spacing */
+}
+
+.payment-method {
+    margin-bottom: 20px;
+}
+
+.price{
+    text-decoration: line-through;
+}
+
+.offerPrice{
+    width: 150%;
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333;
+}
+
+.custom-checkbox input {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #28a745;
+    border-radius: 4px;
+    margin-right: 10px;
+    position: relative;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.custom-checkbox input:checked + .checkmark {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.custom-checkbox input:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }
 
 .product-img {
-    width: 550px;
+    width: 150%;
     height: auto;
     margin-right: 20px;
+    border-radius: 5px;
 }
 
 .product-details {
@@ -172,72 +264,97 @@ body {
 .product-name {
     font-size: 1.5em;
     margin: 0;
+    color: #333;
 }
 
 .product-description {
     font-size: 1em;
-    color: #202020;
+    color: #555;
 }
 
 .product-category {
     font-size: 0.9em;
-    color: #111111;
-}
-
-.product-price, .product-offprice {
-    font-size: 1.2em;
-    margin: 5px 0;
-}
-
-.product-category {
+    color: #777;
     font-weight: bold;
 }
 
 .product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.original-price {
     text-decoration: line-through;
-    color: #999;
+    color: #888;
 }
 
 .offer-price {
-    color: #e91e63;
-    font-size: 1.2em;
+    font-size: 3vh;
     font-weight: bold;
+    color: #d9534f;
+    margin-top: 5px;
 }
 
 .payment-button {
     padding: 10px 20px;
+    width: 155%;
     font-size: 1em;
     color: #fff;
     background-color: #28a745;
+    align-items: center;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .payment-button:hover {
     background-color: #218838;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
     .order-summary {
-        padding: 10px;
-    }
-
-    .product-img {
-        width: 80px;
-    }
-
-    .product-name {
-        font-size: 1.2em;
-    }
-
-    .payment-button {
-        width: 100%;
+        max-width: 50%;
     }
 }
 
-.price{
-    text-decoration: line-through;
+@media (max-width: 900px) {
+    .order-summary {
+        max-width: 70%;
+    }
+
+    .select-box {
+        width: 100%; /* Adjust select box width */
+    }
+}
+
+@media (max-width: 600px) {
+    .order-summary {
+        padding: 10px;
+        max-width: 90%; /* Full width on small screens */
+    }
+
+    .product-img {
+        width: 80px; /* Smaller image on mobile */
+    }
+
+    .product-name {
+        font-size: 1.2em; /* Smaller font size */
+    }
+
+    .payment-button {
+        width: 100%; /* Full width button */
+    }
+
+    .product {
+        flex-direction: column; /* Stack product details */
+        align-items: flex-start;
+    }
+
+    .product-img {
+        margin-bottom: 10px; /* Space below image */
+    }
 }
 
 .footer {
@@ -245,7 +362,10 @@ body {
     color: rgb(0, 0, 0);
     text-align: center;
     padding: 5px 0;
-    margin-top: 90px;
+    margin-top: 19vh;
+    margin-bottom: -2vh;
+    margin-left: -2vh;
+    margin-right: -3vh;
 }
 
 .image-user{
