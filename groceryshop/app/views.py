@@ -622,7 +622,9 @@ def book2(req):
             price=i.price*i.quantity
             data=Buy.objects.create(user=i.user,details=i.details,quantity=i.quantity,tot_price=price,address=Address.objects.get(pk=req.session['address']))
             data.save()
-        cart.delete()
+            i.details.stock-=i.quantity
+            i.details.save()
+            cart.delete()
         return redirect(user_bookings)
     else:
         return redirect(gro_login)

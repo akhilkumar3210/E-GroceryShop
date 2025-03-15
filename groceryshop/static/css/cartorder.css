@@ -184,7 +184,7 @@ body {
 
 .product {
     display: flex;
-    align-items: center;
+    margin-left: 1vh;
     margin-bottom: 20px;
     flex-direction: column;
 }

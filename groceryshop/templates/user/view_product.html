@@ -51,7 +51,7 @@
             <a class="nav-link text-dark" href="../Address">Add Address</a>
           </li>
           <li class="nav-item  ">
-            <a class="nav-link text-dark" href="logout">Logout</a>
+            <a class="nav-link text-dark" href="../logout">Logout</a>
           </li>
         </ul>
       </div>
@@ -69,7 +69,7 @@
       {% if data2.stock > 0 %}
       <h4 class=""> ONLY {{data2.stock}} LEFT</h4>
       {% else %}
-      <h4>OUT OF STOCK </h4>
+      <h4 style="color: red;" >OUT OF STOCK </h4>
       {% endif %}
       {% for j in data1 %}
       <label class="" for="">
